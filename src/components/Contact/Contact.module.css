@@ -1,0 +1,19 @@
+.deleteButton {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+
+  padding: 4px 15px;
+  background-color: transparent;
+  border-radius: 5px;
+  cursor: pointer;
+  border: 1px solid #ccc;
+}
+
+.contact {
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
