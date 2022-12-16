@@ -7,19 +7,30 @@ import Section from 'components/Section/Section';
 import Contacts from 'components/Contacts/Contacts';
 import Filter from 'components/FIlter/Filter';
 
-import { useGetContactsQuery } from 'redux/contactsApi';
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
+
+import { fetchContacts } from 'redux/contacts/contacts-operations';
+import { getError, getIsLoading } from 'redux/contacts/contacts-selectors';
 
 const ContactsPage = () => {
-  const { data, error, isLoading } = useGetContactsQuery();
+  const dispatch = useDispatch();
+  const isLoading = useSelector(getIsLoading);
+  const error = useSelector(getError);
+
+  useEffect(() => {
+    dispatch(fetchContacts());
+  }, [dispatch]);
 
   return (
     <>
       <Section title={'Phonebook'}>
-        <ContactForm contacts={data} />
+        <ContactForm />
       </Section>
 
       <Section title={'Contacts'}>
         <Filter />
+        {error && 'Something goes wrong :( '}
         {isLoading && !error ? (
           <ThreeDots
             height="80"
@@ -32,7 +43,7 @@ const ContactsPage = () => {
             visible={true}
           />
         ) : (
-          <Contacts contacts={data} />
+          <Contacts />
         )}
       </Section>
     </>

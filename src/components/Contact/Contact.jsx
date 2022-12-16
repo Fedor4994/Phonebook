@@ -1,34 +1,21 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 import s from './Contact.module.css';
-import { useDeleteContactMutation } from 'redux/contactsApi';
-import { Puff } from 'react-loader-spinner';
 
-const Contact = ({ contact }) => {
+import { useSelector } from 'react-redux';
+import { getIsLoading } from 'redux/contacts/contacts-selectors';
+
+const Contact = ({ onContactDelete, contact }) => {
   const { name, number } = contact;
-  const [deleteContact, { isLoading }] = useDeleteContactMutation();
-
+  const isLoading = useSelector(getIsLoading);
   return (
     <div className={s.contact}>
       <p>{`${name}: ${number}`}</p>
       <button
         disabled={isLoading}
-        onClick={() => deleteContact(contact.id)}
+        onClick={() => onContactDelete(contact.id)}
         className={s.deleteButton}
       >
-        {isLoading && (
-          <Puff
-            height="12"
-            width="12"
-            radisu={1}
-            color="#4fa94d"
-            ariaLabel="puff-loading"
-            wrapperStyle={{}}
-            wrapperClass=""
-            visible={true}
-          />
-        )}
-        {isLoading ? 'Deleting' : 'Delete'}
+        Delete
       </button>
     </div>
   );
