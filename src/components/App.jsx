@@ -8,8 +8,16 @@ import NotFoundPage from 'views/NotFoundPage';
 import RegiserPage from 'views/RegiserPage';
 
 import { Route, Routes } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { useEffect } from 'react';
+import { getCurrentUser } from 'redux/auth/auth-operations';
 
 export const App = () => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getCurrentUser());
+  }, [dispatch]);
+
   return (
     <>
       <Routes>

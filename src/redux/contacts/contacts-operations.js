@@ -1,7 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-//petrozavr@gmail.com asdfgh123 petyazavr@mail.comzxcvbn123
+//petrozavr@gmail.com asdfgh123 petyazavr@mail.com zxcvbn123
 
 export const fetchContacts = createAsyncThunk(
   'contacts/fetchAll',
