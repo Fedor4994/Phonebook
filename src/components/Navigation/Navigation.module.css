@@ -21,6 +21,10 @@
   color: #fff;
 }
 
+.navLink:hover {
+  scale: 1.1;
+}
+
 .navigation {
   display: flex;
   align-items: center;

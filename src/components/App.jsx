@@ -31,9 +31,7 @@ export const App = () => {
         height: '100%',
       }}
     >
-      {isFetchingUser ? (
-        <h1>Refreshing user...</h1>
-      ) : (
+      {!isFetchingUser && (
         <>
           <Routes>
             <Route path="/" element={<Layout />}>
