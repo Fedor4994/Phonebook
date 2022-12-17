@@ -1,9 +1,8 @@
 import React from 'react';
 
 import { ThreeDots } from 'react-loader-spinner';
-
+import s from './ContactsPage.module.css';
 import ContactForm from 'components/ContactForm/ContactForm';
-import Section from 'components/Section/Section';
 import Contacts from 'components/Contacts/Contacts';
 import Filter from 'components/FIlter/Filter';
 
@@ -23,12 +22,9 @@ const ContactsPage = () => {
   }, [dispatch]);
 
   return (
-    <>
-      <Section title={'Phonebook'}>
-        <ContactForm />
-      </Section>
-
-      <Section title={'Contacts'}>
+    <div className={s.contactsPage}>
+      <div className={s.contacts}>
+        <h2 className={s.addContact}>Your contacts</h2>
         <Filter />
         {error && 'Something goes wrong :( '}
         {isLoading && !error ? (
@@ -45,8 +41,12 @@ const ContactsPage = () => {
         ) : (
           <Contacts />
         )}
-      </Section>
-    </>
+      </div>
+      <div className={s.contactForm}>
+        <h2 className={s.addContact}>Add contact</h2>
+        <ContactForm />
+      </div>
+    </div>
   );
 };
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-
+import s from './RegisterForm.module.css';
 import { register } from 'redux/auth/auth-operations';
 
 const RegisterForm = () => {
@@ -34,15 +34,22 @@ const RegisterForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} autoComplete="off">
+    <form className={s.registerForm} onSubmit={handleSubmit} autoComplete="off">
       <label>
-        Имя
-        <input type="text" name="name" value={name} onChange={handleChange} />
+        <input
+          className={s.registerInput}
+          placeholder="Name"
+          type="text"
+          name="name"
+          value={name}
+          onChange={handleChange}
+        />
       </label>
 
       <label>
-        Почта
         <input
+          className={s.registerInput}
+          placeholder="Email"
           type="email"
           name="email"
           value={email}
@@ -51,8 +58,9 @@ const RegisterForm = () => {
       </label>
 
       <label>
-        Пароль
         <input
+          className={s.registerInput}
+          placeholder="Password"
           type="password"
           name="password"
           value={password}
@@ -60,7 +68,9 @@ const RegisterForm = () => {
         />
       </label>
 
-      <button type="submit">Зарегистрироваться</button>
+      <button className={s.registerButton} type="submit">
+        Register
+      </button>
     </form>
   );
 };

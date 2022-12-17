@@ -2,10 +2,15 @@
 /* bring in normalize.css styles */
 
 body {
-  font-family: sans-serif;
   line-height: 1.5;
   margin: 0;
 }
+
+html,
+body {
+  height: 100%;
+}
+
 h1,
 h2,
 h3,
@@ -19,9 +24,17 @@ ul,
 ol {
   margin: 0;
   padding: 0;
+  list-style: none;
 }
 img {
   display: block;
   max-width: 100%;
   height: auto;
+}
+a {
+  text-decoration: none;
+}
+
+#root {
+  height: 100%;
 }

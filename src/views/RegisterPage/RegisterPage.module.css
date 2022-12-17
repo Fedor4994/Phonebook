@@ -1,0 +1,16 @@
+.registerPage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 20px;
+  padding: 40px;
+}
+
+.register {
+  font-size: 50px;
+  font-weight: 700;
+  color: #fff;
+  font-family: sans-serif;
+  opacity: 0.95;
+}

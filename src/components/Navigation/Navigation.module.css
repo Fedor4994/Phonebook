@@ -1,3 +1,51 @@
 .activeNavLink {
-  background-color: aqua;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 20px;
+  background-color: #c5273c;
+
+  border-radius: 10px;
+  font-size: 22px;
+  color: #fff;
+}
+
+.navLink {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px 15px;
+  border: 2px solid #fff;
+  border-radius: 10px;
+  font-size: 18px;
+  color: #fff;
+}
+
+.navigation {
+  display: flex;
+  align-items: center;
+
+  justify-content: space-between;
+  height: 100%;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  color: rgb(135, 135, 135);
+}
+
+.logoText {
+  color: #fff;
+  font-weight: 500;
+  font-size: 32px;
+}
+
+.navigationList {
+  color: #fff;
+  font-size: 22px;
+  gap: 20px;
+  display: flex;
+  height: 100%;
+  align-items: center;
 }

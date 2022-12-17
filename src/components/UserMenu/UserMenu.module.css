@@ -1,0 +1,11 @@
+.logoutButton {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.userMenu {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}

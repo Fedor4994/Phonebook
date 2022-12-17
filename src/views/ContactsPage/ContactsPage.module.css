@@ -1,0 +1,29 @@
+.contactForm {
+  display: flex;
+  align-items: center;
+  padding-top: 30px;
+  flex-direction: column;
+}
+
+.addContact {
+  font-size: 50px;
+  font-weight: 700;
+  color: #fff;
+  font-family: sans-serif;
+  opacity: 0.95;
+  margin-bottom: 20px;
+}
+
+.contactsPage {
+  display: flex;
+  justify-content: space-around;
+}
+
+.contacts {
+  padding-top: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  padding-bottom: 30px;
+}

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { logIn } from 'redux/auth/auth-operations';
+import s from './LoginForm.module.css';
 
 const LoginForm = () => {
   const [email, setEmail] = useState('');
@@ -25,10 +26,11 @@ const LoginForm = () => {
     setPassword('');
   };
   return (
-    <form onSubmit={handleSubmit} autoComplete="off">
+    <form className={s.loginForm} onSubmit={handleSubmit} autoComplete="off">
       <label>
-        Почта
         <input
+          className={s.loginInput}
+          placeholder="Email"
           type="email"
           name="email"
           value={email}
@@ -37,8 +39,9 @@ const LoginForm = () => {
       </label>
 
       <label>
-        Пароль
         <input
+          className={s.loginInput}
+          placeholder="Password"
           type="password"
           name="password"
           value={password}
@@ -46,7 +49,9 @@ const LoginForm = () => {
         />
       </label>
 
-      <button type="submit">Войти</button>
+      <button className={s.loginButton} type="submit">
+        Login
+      </button>
     </form>
   );
 };

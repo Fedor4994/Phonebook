@@ -15,8 +15,8 @@ const Filter = () => {
   return (
     <>
       <label className={s.filterLabel}>
-        Find contacts by name
         <input
+          placeholder="Search"
           className={s.filterInput}
           type="text"
           value={filter}

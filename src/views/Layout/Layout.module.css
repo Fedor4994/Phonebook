@@ -1,0 +1,33 @@
+.header {
+  padding: 30px;
+  background-color: rgba(17, 24, 39, 1);
+  box-shadow: rgba(0, 0, 0, 0.45) 0px 14px 30px 0px;
+}
+
+.content {
+  /* min-height: 100%; */
+
+  flex: 1 0 auto;
+  background-color: rgba(17, 24, 39, 1);
+}
+.footer {
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: aliceblue;
+  gap: 20px;
+  padding: 25px;
+  background-color: rgba(17, 24, 39, 1);
+  flex: 0 0 auto;
+
+  box-shadow: rgba(0, 0, 0, 0.45) 0px 25px 20px 25px;
+}
+
+.gitLink {
+  font-style: 34px;
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  color: #fff;
+}

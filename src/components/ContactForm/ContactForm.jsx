@@ -34,10 +34,10 @@ const ContactForm = () => {
   return (
     <form onSubmit={onSubmit} className={s.contactForm}>
       <label className={s.contactLabel}>
-        Name
         <input
           className={s.contactInput}
           onChange={onNameChange}
+          placeholder="Name"
           type="text"
           name="name"
           value={name}
@@ -48,10 +48,10 @@ const ContactForm = () => {
       </label>
 
       <label className={s.contactLabel}>
-        Number
         <input
           className={s.contactInput}
           onChange={onNumberChange}
+          placeholder="Phone number"
           type="tel"
           name="number"
           value={number}

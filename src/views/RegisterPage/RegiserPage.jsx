@@ -1,9 +1,10 @@
 import RegisterForm from 'components/RegisterForm/RegisterForm';
-import React from 'react';
+import s from './RegisterPage.module.css';
 
 const RegiserPage = () => {
   return (
-    <div>
+    <div className={s.registerPage}>
+      <h2 className={s.register}>Register User</h2>
       <RegisterForm />
     </div>
   );
