@@ -57,7 +57,6 @@ export const getCurrentUser = createAsyncThunk(
     const persistToken = state.auth.token;
 
     if (persistToken === null) {
-      console.log('no token bro');
       return rejectWithValue();
     }
 
