@@ -10,6 +10,11 @@
   scrollbar-width: thin; */
 }
 
+.empty {
+  color: #fff;
+  font-size: 32px;
+  font-weight: 700;
+}
 /* .contactsList::-webkit-scrollbar {
   width: 20px;
 }

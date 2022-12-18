@@ -20,7 +20,7 @@ const Contacts = ({ onContactEdit, contactDelete }) => {
       ))}
     </ul>
   ) : (
-    'There are no contacts'
+    <h3 className={s.empty}>No contacts</h3>
   );
 };
 
