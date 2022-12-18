@@ -1,4 +1,4 @@
-import React from 'react';
+import { useState } from 'react';
 
 import { ThreeDots } from 'react-loader-spinner';
 import s from './ContactsPage.module.css';
@@ -9,17 +9,31 @@ import Filter from 'components/FIlter/Filter';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 
-import { fetchContacts } from 'redux/contacts/contacts-operations';
+import {
+  deleteContact,
+  fetchContacts,
+} from 'redux/contacts/contacts-operations';
 import { getError, getIsLoading } from 'redux/contacts/contacts-selectors';
+import EditForm from 'components/EditForm/EditForm';
 
 const ContactsPage = () => {
   const dispatch = useDispatch();
   const isLoading = useSelector(getIsLoading);
   const error = useSelector(getError);
+  const [editedContact, setEditedContact] = useState(null);
 
   useEffect(() => {
     dispatch(fetchContacts());
   }, [dispatch]);
+
+  const handleEdit = contactForEdit => {
+    setEditedContact(contactForEdit);
+  };
+
+  const handleDelete = id => {
+    dispatch(deleteContact(id));
+    setEditedContact(null);
+  };
 
   return (
     <div className={s.contactsPage}>
@@ -39,13 +53,23 @@ const ContactsPage = () => {
             visible={true}
           />
         ) : (
-          <Contacts />
+          <Contacts contactDelete={handleDelete} onContactEdit={handleEdit} />
         )}
       </div>
-      <div className={s.contactForm}>
-        <h2 className={s.addContact}>Add contact</h2>
-        <ContactForm />
-      </div>
+      {editedContact ? (
+        <div className={s.contactForm}>
+          <h2 className={s.addContact}>Edit contact</h2>
+          <EditForm
+            editFinish={() => handleEdit(null)}
+            editedContact={editedContact}
+          />
+        </div>
+      ) : (
+        <div className={s.contactForm}>
+          <h2 className={s.addContact}>Add contact</h2>
+          <ContactForm />
+        </div>
+      )}
     </div>
   );
 };

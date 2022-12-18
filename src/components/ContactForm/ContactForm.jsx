@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import s from './ContactForm.module.css';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import { getContacts, getIsLoading } from 'redux/contacts/contacts-selectors';
 import { addContact } from 'redux/contacts/contacts-operations';
@@ -9,9 +11,11 @@ const ContactForm = () => {
   const dispatch = useDispatch();
   const contacts = useSelector(getContacts);
   const isLoading = useSelector(getIsLoading);
+  const notify = () => toast.error(`${name} is already in contacts`);
 
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
+
   const onNameChange = event => setName(event.target.value);
   const onNumberChange = event => setNumber(event.target.value);
 
@@ -19,7 +23,7 @@ const ContactForm = () => {
     event.preventDefault();
     const isRepeatedContact = contacts.find(contact => contact.name === name);
     if (isRepeatedContact) {
-      alert(`${name} is already in contacts`);
+      notify();
     } else {
       dispatch(addContact({ name, number }));
     }

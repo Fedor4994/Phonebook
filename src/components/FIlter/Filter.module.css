@@ -1,10 +1,26 @@
 .filterInput {
-  border: 1px solid #fff;
+  background-image: url('./search.png');
+  background-position: 10px;
+  background-repeat: no-repeat;
+  background-size: 20px;
+  border: none;
   color: #fff;
+  outline: none;
   background-color: rgba(55, 65, 81, 1);
   width: 400px;
   height: 35px;
   border-radius: 10px;
   padding: 3px 10px;
+  padding-left: 40px;
+}
+
+.filterForm {
+  background-color: rgba(31, 41, 55, 1);
+  width: 600px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 100px;
   margin-bottom: 20px;
 }

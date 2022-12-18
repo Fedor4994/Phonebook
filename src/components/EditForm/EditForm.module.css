@@ -1,0 +1,43 @@
+.editForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(31, 41, 55, 1);
+  border-radius: 10px;
+  width: 480px;
+  gap: 30px;
+  padding: 50px 10px;
+}
+
+.editInput {
+  border: 1px solid #fff;
+  color: #fff;
+  background-color: rgba(55, 65, 81, 1);
+  width: 400px;
+  height: 35px;
+  border-radius: 10px;
+  padding: 3px 10px;
+}
+
+.editButtons {
+  display: flex;
+  width: 88%;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.submitButton {
+  width: 100%;
+  height: 40px;
+  border: none;
+  cursor: pointer;
+  color: #fff;
+  font-size: 18px;
+  background-color: rgba(156, 163, 175, 1);
+  border-radius: 10px;
+}
+
+.submitButton:hover {
+  background-color: rgb(114, 146, 160);
+}

@@ -1,4 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
+
 import s from './Filter.module.css';
 
 import { setFilter } from 'redux/contacts/filterSlice';
@@ -13,7 +14,7 @@ const Filter = () => {
   };
 
   return (
-    <>
+    <div className={s.filterForm}>
       <label className={s.filterLabel}>
         <input
           placeholder="Search"
@@ -23,7 +24,7 @@ const Filter = () => {
           onChange={onFilterChange}
         />
       </label>
-    </>
+    </div>
   );
 };
 

@@ -1,12 +1,14 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { logIn } from 'redux/auth/auth-operations';
+import { toast } from 'react-toastify';
 import s from './LoginForm.module.css';
 
 const LoginForm = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const dispatch = useDispatch();
+  const notify = () => toast.error('Incorrect email or password');
 
   const handleChange = ({ target: { name, value } }) => {
     switch (name) {
@@ -21,9 +23,15 @@ const LoginForm = () => {
 
   const handleSubmit = e => {
     e.preventDefault();
-    dispatch(logIn({ email, password }));
-    setEmail('');
-    setPassword('');
+    dispatch(logIn({ email, password })).then(data => {
+      if (data.error) {
+        notify();
+        setPassword('');
+        return;
+      }
+      setEmail('');
+      setPassword('');
+    });
   };
   return (
     <form className={s.loginForm} onSubmit={handleSubmit} autoComplete="off">
@@ -35,6 +43,7 @@ const LoginForm = () => {
           name="email"
           value={email}
           onChange={handleChange}
+          required
         />
       </label>
 
@@ -46,6 +55,7 @@ const LoginForm = () => {
           name="password"
           value={password}
           onChange={handleChange}
+          required
         />
       </label>
 

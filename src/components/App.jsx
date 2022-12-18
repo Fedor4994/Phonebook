@@ -1,10 +1,10 @@
 import React from 'react';
-
+import { ToastContainer } from 'react-toastify';
 import Layout from 'views/Layout/Layout';
 import ContactsPage from 'views/ContactsPage/ContactsPage';
 import HomePage from 'views/HomePage/HomePage';
 import LoginPage from 'views/LoginPage/LoginPage';
-import NotFoundPage from 'views/NotFoundPage';
+import NotFoundPage from 'views/NotFoundPage/NotFoundPage';
 import RegiserPage from 'views/RegisterPage/RegiserPage';
 
 import { Route, Routes } from 'react-router-dom';
@@ -63,6 +63,18 @@ export const App = () => {
           </Routes>
         </>
       )}
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss={false}
+        draggable
+        pauseOnHover={false}
+        theme="dark"
+      />
     </div>
   );
 };
