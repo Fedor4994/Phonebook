@@ -18,9 +18,9 @@
 
   background-image: url('../addressbook.png');
   background-repeat: no-repeat;
-  background-position: 105% 50%;
+  background-position: 100% 110%;
   /* background-position: 910px -50px; */
-  background-size: 700px;
+  background-size: 600px;
 }
 
 .homeButton {

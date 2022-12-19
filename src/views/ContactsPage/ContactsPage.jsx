@@ -5,7 +5,8 @@ import s from './ContactsPage.module.css';
 import ContactForm from 'components/ContactForm/ContactForm';
 import Contacts from 'components/Contacts/Contacts';
 import Filter from 'components/FIlter/Filter';
-
+import { confirmAlert } from 'react-confirm-alert';
+import 'react-confirm-alert/src/react-confirm-alert.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 
@@ -31,8 +32,33 @@ const ContactsPage = () => {
   };
 
   const handleDelete = id => {
-    dispatch(deleteContact(id));
-    setEditedContact(null);
+    confirmAlert({
+      customUI: ({ onClose }) => {
+        return (
+          <div className="custom-ui">
+            <div className={s.modal}>
+              <h1>Are you sure?</h1>
+              <p className={s.confirmText}>You want to delete this contact?</p>
+              <div className={s.buttons}>
+                <button className={s.confirmButton} onClick={onClose}>
+                  No
+                </button>
+                <button
+                  className={s.confirmButton}
+                  onClick={() => {
+                    dispatch(deleteContact(id));
+                    setEditedContact(null);
+                    onClose();
+                  }}
+                >
+                  Delete it
+                </button>
+              </div>
+            </div>
+          </div>
+        );
+      },
+    });
   };
 
   return (

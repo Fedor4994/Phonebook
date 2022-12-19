@@ -2,14 +2,18 @@ import { useSelector } from 'react-redux';
 import s from './Contacts.module.css';
 
 import Contact from 'components/Contact/Contact';
-import { getVisibleContacts } from 'redux/contacts/contacts-selectors';
+import {
+  getContacts,
+  getVisibleContacts,
+} from 'redux/contacts/contacts-selectors';
 
 const Contacts = ({ onContactEdit, contactDelete }) => {
-  const contacts = useSelector(getVisibleContacts);
+  const visibleContacts = useSelector(getVisibleContacts);
+  const contacts = useSelector(getContacts);
 
   return contacts.length ? (
     <ul className={s.contactsList}>
-      {contacts.map(contact => (
+      {visibleContacts.map(contact => (
         <li key={contact.id}>
           <Contact
             onContactEdit={onContactEdit}
@@ -20,7 +24,7 @@ const Contacts = ({ onContactEdit, contactDelete }) => {
       ))}
     </ul>
   ) : (
-    <h3 className={s.empty}>No contacts</h3>
+    <h3 className={s.empty}>Сome on, add your first contact!</h3>
   );
 };
 
