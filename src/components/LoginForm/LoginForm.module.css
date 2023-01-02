@@ -33,3 +33,19 @@
 .loginButton:hover {
   background-color: rgb(114, 146, 160);
 }
+
+@media screen and (min-width: 320px) and (max-width: 768px) {
+  .loginForm {
+    width: 90%;
+    padding: 20px;
+    align-items: stretch;
+  }
+
+  .loginInput {
+    width: 95%;
+  }
+
+  .loginButton {
+    width: 100%;
+  }
+}

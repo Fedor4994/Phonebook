@@ -33,3 +33,19 @@
 .registerButton:hover {
   background-color: rgb(114, 146, 160);
 }
+
+@media screen and (min-width: 320px) and (max-width: 768px) {
+  .registerForm {
+    width: 90%;
+    padding: 20px;
+    align-items: stretch;
+  }
+
+  .registerInput {
+    width: 95%;
+  }
+
+  .registerButton {
+    width: 100%;
+  }
+}

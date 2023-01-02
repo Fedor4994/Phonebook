@@ -10,7 +10,7 @@ export default function UserMenu() {
 
   return (
     <div className={s.userMenu}>
-      You're welcome, {user.name}
+      <span className={s.welcome}>You're welcome, {user.name}</span>
       <button
         className={s.logoutButton}
         type="button"

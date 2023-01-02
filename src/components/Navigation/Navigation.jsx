@@ -6,12 +6,13 @@ import UserMenu from 'components/UserMenu/UserMenu';
 import { RiContactsBook2Fill } from 'react-icons/ri';
 
 const Navigation = () => {
+  const width = window.innerWidth;
   const isLoggedIn = useSelector(getIsLoggedIn);
   return (
     <nav className={s.navigation}>
       <Link className={s.logo} to="/">
         <RiContactsBook2Fill size={60} />
-        <span className={s.logoText}>PHONEBOOK</span>
+        {width > 1280 && <span className={s.logoText}>PHONEBOOK</span>}
       </Link>
 
       <ul className={s.navigationList}>

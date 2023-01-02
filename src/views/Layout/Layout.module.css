@@ -31,3 +31,8 @@
   align-items: center;
   color: #fff;
 }
+@media screen and (min-width: 320px) and (max-width: 768px) {
+  .footer {
+    font-size: 18px;
+  }
+}

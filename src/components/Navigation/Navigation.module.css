@@ -53,3 +53,31 @@
   height: 100%;
   align-items: center;
 }
+
+@media screen and (min-width: 320px) and (max-width: 768px) {
+  .activeNavLink {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px 10px;
+    background-color: #c5273c;
+    width: 40px;
+    border-radius: 10px;
+    font-size: 14px;
+    color: #fff;
+  }
+
+  .navLink {
+    width: 40px;
+    padding: 4px 10px;
+    font-size: 14px;
+  }
+
+  .navigation {
+    display: flex;
+    align-items: center;
+
+    justify-content: space-around;
+    height: 100%;
+  }
+}

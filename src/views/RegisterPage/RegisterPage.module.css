@@ -14,3 +14,9 @@
   font-family: sans-serif;
   opacity: 0.95;
 }
+
+@media screen and (min-width: 320px) and (max-width: 768px) {
+  .register {
+    font-size: 30px;
+  }
+}

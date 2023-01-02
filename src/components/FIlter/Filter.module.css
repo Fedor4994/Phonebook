@@ -24,3 +24,13 @@
   border-radius: 100px;
   margin-bottom: 20px;
 }
+
+@media screen and (min-width: 320px) and (max-width: 1000px) {
+  .filterInput {
+    width: 150px;
+  }
+
+  .filterForm {
+    width: 300px;
+  }
+}
