@@ -41,3 +41,20 @@
 .submitButton:hover {
   background-color: rgb(114, 146, 160);
 }
+
+@media screen and (min-width: 320px) and (max-width: 1000px) {
+  .editForm {
+    width: 90%;
+    padding: 20px;
+    align-items: stretch;
+  }
+
+  .editInput {
+    width: 95%;
+  }
+
+  .submitButton {
+    width: 100%;
+    font-size: 16px;
+  }
+}
