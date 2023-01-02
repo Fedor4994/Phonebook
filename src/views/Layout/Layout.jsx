@@ -23,7 +23,7 @@ const Layout = () => {
           rel="noreferrer"
         >
           <BsGithub size={30} />
-          Fedor Potroshitel
+          Fedor Sosnin
         </a>
       </footer>
     </>
