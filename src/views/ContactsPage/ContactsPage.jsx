@@ -1,19 +1,18 @@
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { ThreeDots } from 'react-loader-spinner';
-import s from './ContactsPage.module.css';
+import 'react-confirm-alert/src/react-confirm-alert.css';
+import { fetchContacts } from 'redux/contacts/contacts-operations';
 import ContactForm from 'components/ContactForm/ContactForm';
 import Contacts from 'components/Contacts/Contacts';
 import Filter from 'components/FIlter/Filter';
-import 'react-confirm-alert/src/react-confirm-alert.css';
-import { useDispatch, useSelector } from 'react-redux';
-import { useEffect } from 'react';
-
-import { fetchContacts } from 'redux/contacts/contacts-operations';
+import EditForm from 'components/EditForm/EditForm';
 import {
   getEditedContact,
   getError,
   getIsLoading,
 } from 'redux/contacts/contacts-selectors';
-import EditForm from 'components/EditForm/EditForm';
+import s from './ContactsPage.module.css';
 
 const ContactsPage = () => {
   const dispatch = useDispatch();

@@ -1,16 +1,18 @@
-import { useState } from 'react';
-import s from './EditForm.module.css';
+import { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   getEditedContact,
   getIsLoading,
 } from 'redux/contacts/contacts-selectors';
-import { useDispatch, useSelector } from 'react-redux';
 import { updateContact } from 'redux/contacts/contacts-operations';
-import { useEffect } from 'react';
 import { setEditedContact } from 'redux/contacts/contactsSlice';
+import s from './EditForm.module.css';
 
 const EditForm = () => {
+  const dispatch = useDispatch();
   const editedContact = useSelector(getEditedContact);
+  const isLoading = useSelector(getIsLoading);
+
   const [name, setName] = useState(editedContact.name);
   const [number, setNumber] = useState(editedContact.number);
 
@@ -19,10 +21,8 @@ const EditForm = () => {
     setNumber(editedContact.number);
   }, [editedContact.name, editedContact.number]);
 
-  const dispatch = useDispatch();
   const onNameChange = event => setName(event.target.value);
   const onNumberChange = event => setNumber(event.target.value);
-  const isLoading = useSelector(getIsLoading);
 
   const handleSubmit = event => {
     event.preventDefault();

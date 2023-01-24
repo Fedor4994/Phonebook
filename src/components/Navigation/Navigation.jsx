@@ -1,9 +1,9 @@
 import { useSelector } from 'react-redux';
 import { Link, NavLink } from 'react-router-dom';
-import s from './Navigation.module.css';
+import { RiContactsBook2Fill } from 'react-icons/ri';
 import { getIsLoggedIn } from 'redux/auth/auth-selectors';
 import UserMenu from 'components/UserMenu/UserMenu';
-import { RiContactsBook2Fill } from 'react-icons/ri';
+import s from './Navigation.module.css';
 
 const Navigation = () => {
   const width = window.innerWidth;

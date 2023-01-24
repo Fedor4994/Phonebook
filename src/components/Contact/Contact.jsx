@@ -1,11 +1,11 @@
-import s from './Contact.module.css';
+import { useDispatch, useSelector } from 'react-redux';
+import { confirmAlert } from 'react-confirm-alert';
 import { HiOutlineUserCircle } from 'react-icons/hi';
 import { FiPhone } from 'react-icons/fi';
-import { useDispatch, useSelector } from 'react-redux';
 import { getContacts, getIsLoading } from 'redux/contacts/contacts-selectors';
 import { setEditedContact } from 'redux/contacts/contactsSlice';
-import { confirmAlert } from 'react-confirm-alert';
 import { deleteContact } from 'redux/contacts/contacts-operations';
+import s from './Contact.module.css';
 
 const Contact = ({ contact }) => {
   const { name, number } = contact;
