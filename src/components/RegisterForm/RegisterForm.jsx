@@ -1,94 +1,100 @@
-import { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { ErrorMessage, Field, Form, Formik } from 'formik';
+import * as yup from 'yup';
 import { toast } from 'react-toastify';
 import { register } from 'redux/auth/auth-operations';
 import s from './RegisterForm.module.css';
 
+const initialValues = {
+  name: '',
+  email: '',
+  password: '',
+};
+
+const lettersOnly = value =>
+  /^[a-zA-Zа-яА-Я]+(([ -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$/.test(value);
+
+const schema = yup.object().shape({
+  name: yup
+    .string()
+    .required('Name is a required field')
+    .test(
+      'Letters only',
+      'Name may contain only letters, apostrophe, dash and spaces.',
+      lettersOnly
+    ),
+  email: yup
+    .string()
+    .email('Must be a valid email')
+    .required('Email is a required field'),
+  password: yup
+    .string()
+    .min(9, 'Password must be at least 9 characters')
+    .max(20, 'Password must be at most 20 characters')
+    .required('Password is a required field'),
+});
+
 const RegisterForm = () => {
   const dispatch = useDispatch();
-
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-
   const notify = () => toast.error('A user with the same email already exists');
 
-  const handleSubmit = event => {
-    event.preventDefault();
+  const handleSubmit = ({ name, email, password }, { resetForm }) => {
     dispatch(register({ name, email, password })).then(data => {
       if (data.error) {
         notify();
-        setEmail('');
-        return;
+        resetForm({
+          values: {
+            name,
+            email: '',
+            password: '',
+          },
+        });
       }
-      setName('');
-      setEmail('');
-      setPassword('');
     });
   };
 
-  const handleChange = event => {
-    const { name, value } = event.target;
-    switch (name) {
-      case 'name':
-        return setName(value);
-      case 'email':
-        return setEmail(value);
-      case 'password':
-        return setPassword(value);
-      default:
-        return;
-    }
-  };
-
   return (
-    <form className={s.registerForm} onSubmit={handleSubmit} autoComplete="off">
-      <label>
-        <input
-          className={s.registerInput}
-          placeholder="Name"
-          type="text"
-          name="name"
-          value={name}
-          onChange={handleChange}
-          pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
-          title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
-          required
-        />
-      </label>
+    <Formik
+      initialValues={initialValues}
+      validationSchema={schema}
+      onSubmit={handleSubmit}
+    >
+      <Form className={s.registerForm} autoComplete="off">
+        <label>
+          <Field
+            className={s.registerInput}
+            placeholder="Name"
+            type="text"
+            name="name"
+          />
+          <ErrorMessage className={s.error} component="div" name="name" />
+        </label>
 
-      <label>
-        <input
-          className={s.registerInput}
-          placeholder="Email"
-          type="email"
-          name="email"
-          value={email}
-          onChange={handleChange}
-          minLength="15"
-          title="Email must contain at least 15 symbols"
-          required
-        />
-      </label>
+        <label>
+          <Field
+            className={s.registerInput}
+            placeholder="Email"
+            type="email"
+            name="email"
+          />
+          <ErrorMessage className={s.error} component="div" name="email" />
+        </label>
 
-      <label>
-        <input
-          className={s.registerInput}
-          placeholder="Password"
-          type="password"
-          name="password"
-          value={password}
-          onChange={handleChange}
-          pattern="\w{9,20}"
-          title="Допустимая длина пароля 9-20 символов"
-          required
-        />
-      </label>
+        <label>
+          <Field
+            className={s.registerInput}
+            placeholder="Password"
+            type="password"
+            name="password"
+          />
+          <ErrorMessage className={s.error} component="div" name="password" />
+        </label>
 
-      <button className={s.registerButton} type="submit">
-        Register
-      </button>
-    </form>
+        <button className={s.registerButton} type="submit">
+          Register
+        </button>
+      </Form>
+    </Formik>
   );
 };
 

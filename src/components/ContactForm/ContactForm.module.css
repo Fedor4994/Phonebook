@@ -36,6 +36,13 @@
   background-color: rgb(114, 146, 160);
 }
 
+.error {
+  font-size: 14px;
+  font-weight: 700;
+  text-align: center;
+  color: #cc243a;
+}
+
 @media screen and (min-width: 320px) and (max-width: 1000px) {
   .contactForm {
     width: 90%;
