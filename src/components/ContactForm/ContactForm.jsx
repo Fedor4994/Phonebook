@@ -24,11 +24,7 @@ const schema = yup.object().shape({
   name: yup
     .string()
     .required('Name is a required field')
-    .test(
-      'Letters only',
-      'Name may contain only letters, apostrophe, dash and spaces.',
-      lettersOnly
-    ),
+    .test('Letters only', 'Name may contain only letters.', lettersOnly),
   number: yup
     .string()
     .required('Phone number is a required field')
