@@ -1,4 +1,5 @@
 export const getFilter = state => state.filter;
+export const getEditedContact = state => state.contacts.editedContact;
 
 export const getVisibleContacts = state => {
   const normalizedFilter = getFilter(state).toLowerCase();

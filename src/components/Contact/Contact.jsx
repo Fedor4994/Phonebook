@@ -1,18 +1,51 @@
-import PropTypes from 'prop-types';
 import s from './Contact.module.css';
 import { HiOutlineUserCircle } from 'react-icons/hi';
 import { FiPhone } from 'react-icons/fi';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { getContacts, getIsLoading } from 'redux/contacts/contacts-selectors';
+import { setEditedContact } from 'redux/contacts/contactsSlice';
+import { confirmAlert } from 'react-confirm-alert';
+import { deleteContact } from 'redux/contacts/contacts-operations';
 
-const Contact = ({ onContactDelete, onContactEdit, contact }) => {
+const Contact = ({ contact }) => {
   const { name, number } = contact;
+  const dispatch = useDispatch();
   const isLoading = useSelector(getIsLoading);
   const contacts = useSelector(getContacts);
 
   const handleEdit = id => {
     const editedContact = contacts.find(contact => contact.id === id);
-    onContactEdit(editedContact);
+    dispatch(setEditedContact(editedContact));
+  };
+
+  const handleDelete = id => {
+    confirmAlert({
+      customUI: ({ onClose }) => {
+        return (
+          <div className="custom-ui">
+            <div className={s.modal}>
+              <h1>Are you sure?</h1>
+              <p className={s.confirmText}>You want to delete this contact?</p>
+              <div className={s.buttons}>
+                <button className={s.confirmButton} onClick={onClose}>
+                  No
+                </button>
+                <button
+                  className={s.confirmButton}
+                  onClick={() => {
+                    dispatch(deleteContact(id));
+                    dispatch(setEditedContact(null));
+                    onClose();
+                  }}
+                >
+                  Delete it
+                </button>
+              </div>
+            </div>
+          </div>
+        );
+      },
+    });
   };
 
   return (
@@ -28,7 +61,7 @@ const Contact = ({ onContactDelete, onContactEdit, contact }) => {
       <div className={s.contactButtons}>
         <button
           disabled={isLoading}
-          onClick={() => onContactDelete(contact.id)}
+          onClick={() => handleDelete(contact.id)}
           className={s.contactsButton}
         >
           Delete
@@ -46,14 +79,6 @@ const Contact = ({ onContactDelete, onContactEdit, contact }) => {
       </div>
     </div>
   );
-};
-
-Contact.propTypes = {
-  contact: PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    number: PropTypes.string.isRequired,
-    id: PropTypes.string.isRequired,
-  }).isRequired,
 };
 
 export default Contact;

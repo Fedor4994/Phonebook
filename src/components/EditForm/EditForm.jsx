@@ -1,11 +1,16 @@
 import { useState } from 'react';
 import s from './EditForm.module.css';
-import { getIsLoading } from 'redux/contacts/contacts-selectors';
+import {
+  getEditedContact,
+  getIsLoading,
+} from 'redux/contacts/contacts-selectors';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateContact } from 'redux/contacts/contacts-operations';
 import { useEffect } from 'react';
+import { setEditedContact } from 'redux/contacts/contactsSlice';
 
-const EditForm = ({ editedContact, editFinish }) => {
+const EditForm = () => {
+  const editedContact = useSelector(getEditedContact);
   const [name, setName] = useState(editedContact.name);
   const [number, setNumber] = useState(editedContact.number);
 
@@ -24,7 +29,7 @@ const EditForm = ({ editedContact, editFinish }) => {
     const id = editedContact.id;
     const newContact = { name, number, id };
     dispatch(updateContact(newContact));
-    editFinish();
+    dispatch(setEditedContact(null));
   };
 
   return (
@@ -63,7 +68,7 @@ const EditForm = ({ editedContact, editFinish }) => {
         <button
           disabled={isLoading}
           type="button"
-          onClick={editFinish}
+          onClick={() => dispatch(setEditedContact(null))}
           className={s.submitButton}
         >
           Cancel

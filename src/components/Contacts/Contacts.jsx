@@ -7,7 +7,7 @@ import {
   getVisibleContacts,
 } from 'redux/contacts/contacts-selectors';
 
-const Contacts = ({ onContactEdit, contactDelete }) => {
+const Contacts = () => {
   const visibleContacts = useSelector(getVisibleContacts);
   const contacts = useSelector(getContacts);
 
@@ -15,11 +15,7 @@ const Contacts = ({ onContactEdit, contactDelete }) => {
     <ul className={s.contactsList}>
       {visibleContacts.map(contact => (
         <li key={contact.id}>
-          <Contact
-            onContactEdit={onContactEdit}
-            onContactDelete={contactDelete}
-            contact={contact}
-          />
+          <Contact contact={contact} />
         </li>
       ))}
     </ul>

@@ -10,6 +10,7 @@ const contactsInitialState = {
   items: [],
   isLoading: false,
   error: null,
+  editedContact: null,
 };
 
 const handlePending = state => {
@@ -24,6 +25,12 @@ const handleError = (state, { payload }) => {
 const contactsSlice = createSlice({
   name: 'contacts',
   initialState: contactsInitialState,
+
+  reducers: {
+    setEditedContact(state, { payload }) {
+      state.editedContact = payload;
+    },
+  },
 
   extraReducers: {
     [fetchContacts.pending]: handlePending,
@@ -65,3 +72,4 @@ const contactsSlice = createSlice({
 });
 
 export const contactsReducer = contactsSlice.reducer;
+export const { setEditedContact } = contactsSlice.actions;
