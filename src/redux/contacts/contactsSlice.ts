@@ -1,4 +1,5 @@
-import { createSlice, isAnyOf } from '@reduxjs/toolkit';
+import { createSlice, isAnyOf, SerializedError } from '@reduxjs/toolkit';
+import { Contact } from 'types/contact';
 import {
   fetchContacts,
   addContact,
@@ -6,7 +7,14 @@ import {
   updateContact,
 } from './contacts-operations';
 
-const contactsInitialState = {
+export type ContactsSlice = {
+  items: Contact[];
+  isLoading: boolean;
+  error: SerializedError | null;
+  editedContact: Contact | null;
+};
+
+const contactsInitialState: ContactsSlice = {
   items: [],
   isLoading: false,
   error: null,
@@ -75,9 +83,9 @@ const contactsSlice = createSlice({
           deleteContact.rejected,
           updateContact.rejected
         ),
-        (state, { payload }) => {
+        (state, { error }) => {
           state.isLoading = false;
-          state.error = payload;
+          state.error = error;
         }
       ),
 });
