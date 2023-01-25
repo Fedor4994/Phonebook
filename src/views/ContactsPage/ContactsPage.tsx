@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { ThreeDots } from 'react-loader-spinner';
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import { fetchContacts } from 'redux/contacts/contacts-operations';
@@ -13,9 +13,10 @@ import {
   getIsLoading,
 } from 'redux/contacts/contacts-selectors';
 import s from './ContactsPage.module.css';
+import { useAppDispatch } from 'redux/store';
 
 const ContactsPage = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const isLoading = useSelector(getIsLoading);
   const error = useSelector(getError);
   const editedContact = useSelector(getEditedContact);
@@ -38,7 +39,6 @@ const ContactsPage = () => {
             color="#aaa"
             ariaLabel="three-dots-loading"
             wrapperStyle={{}}
-            wrapperClassName=""
             visible={true}
           />
         ) : (
