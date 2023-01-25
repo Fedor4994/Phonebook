@@ -1,4 +1,4 @@
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { confirmAlert } from 'react-confirm-alert';
 import { HiOutlineUserCircle } from 'react-icons/hi';
 import { FiPhone } from 'react-icons/fi';
@@ -6,19 +6,25 @@ import { getContacts, getIsLoading } from 'redux/contacts/contacts-selectors';
 import { setEditedContact } from 'redux/contacts/contactsSlice';
 import { deleteContact } from 'redux/contacts/contacts-operations';
 import s from './Contact.module.css';
+import { Contact } from 'types/contact';
+import { useAppDispatch } from 'redux/store';
 
-const Contact = ({ contact }) => {
+interface ContactProps {
+  contact: Contact;
+}
+
+const ContactItem = ({ contact }: ContactProps) => {
   const { name, number } = contact;
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const isLoading = useSelector(getIsLoading);
   const contacts = useSelector(getContacts);
 
-  const handleEdit = id => {
+  const handleEdit = (id: string) => {
     const editedContact = contacts.find(contact => contact.id === id);
     dispatch(setEditedContact(editedContact));
   };
 
-  const handleDelete = id => {
+  const handleDelete = (id: string) => {
     confirmAlert({
       customUI: ({ onClose }) => {
         return (
@@ -81,4 +87,4 @@ const Contact = ({ contact }) => {
   );
 };
 
-export default Contact;
+export default ContactItem;

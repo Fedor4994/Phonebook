@@ -1,7 +1,6 @@
 import { useSelector } from 'react-redux';
 import s from './Contacts.module.css';
-
-import Contact from 'components/Contact/Contact';
+import ContactItem from 'components/Contact/Contact';
 import {
   getContacts,
   getVisibleContacts,
@@ -15,7 +14,7 @@ const Contacts = () => {
     <ul className={s.contactsList}>
       {visibleContacts.map(contact => (
         <li key={contact.id}>
-          <Contact contact={contact} />
+          <ContactItem contact={contact} />
         </li>
       ))}
     </ul>
