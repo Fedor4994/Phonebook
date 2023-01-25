@@ -1,8 +1,16 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { User } from 'types/auth';
 import { getCurrentUser, logIn, logOut, register } from './auth-operations';
 
-const initialState = {
-  user: { name: null, email: null },
+export type AuthSlice = {
+  user: Pick<User, 'name' | 'email'>;
+  token: string | null;
+  isLoggedIn: boolean;
+  isFetchingCurrentUser: boolean;
+};
+
+const initialState: AuthSlice = {
+  user: { name: '', email: '' },
   token: null,
   isLoggedIn: false,
   isFetchingCurrentUser: false,
@@ -11,7 +19,7 @@ const initialState = {
 const authSilce = createSlice({
   name: 'auth',
   initialState,
-
+  reducers: {},
   extraReducers: builder =>
     builder
       .addCase(register.fulfilled, (state, { payload }) => {
@@ -25,7 +33,7 @@ const authSilce = createSlice({
         state.isLoggedIn = true;
       })
       .addCase(logOut.fulfilled, state => {
-        state.user = { name: null, email: null };
+        state.user = { name: '', email: '' };
         state.token = null;
         state.isLoggedIn = false;
       })
@@ -33,7 +41,8 @@ const authSilce = createSlice({
         state.isFetchingCurrentUser = true;
       })
       .addCase(getCurrentUser.fulfilled, (state, { payload }) => {
-        state.user = payload;
+        state.user.email = payload.email;
+        state.user.name = payload.name;
         state.isLoggedIn = true;
         state.isFetchingCurrentUser = false;
       })
@@ -43,3 +52,4 @@ const authSilce = createSlice({
 });
 
 export default authSilce.reducer;
+export type AuthReducer = ReturnType<typeof authSilce.reducer>;

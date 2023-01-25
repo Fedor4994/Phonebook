@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Route, Routes } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import { getIsFetchingUser } from 'redux/auth/auth-selectors';
@@ -12,9 +12,10 @@ import NotFoundPage from 'views/NotFoundPage/NotFoundPage';
 import RegiserPage from 'views/RegisterPage/RegiserPage';
 import PrivateRoute from './PrivateRoute';
 import PublicRoute from './PublicRoute';
+import { useAppDispatch } from 'redux/store';
 
 export const App = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   useEffect(() => {
     dispatch(getCurrentUser());
   }, [dispatch]);

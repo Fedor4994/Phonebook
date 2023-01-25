@@ -1,7 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { contactsReducer } from './contacts/contactsSlice';
 import { filterReducer } from './contacts/filterSlice';
-import authReducer from './auth/authSlice';
+import authReducer, { AuthReducer } from './auth/authSlice';
 import {
   persistStore,
   persistReducer,
@@ -13,6 +13,7 @@ import {
   REGISTER,
 } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
+import { useDispatch } from 'react-redux';
 
 const authPersistConfig = {
   key: 'auth',
@@ -22,7 +23,7 @@ const authPersistConfig = {
 
 export const store = configureStore({
   reducer: {
-    auth: persistReducer(authPersistConfig, authReducer),
+    auth: persistReducer<AuthReducer>(authPersistConfig, authReducer),
     contacts: contactsReducer,
     filter: filterReducer,
   },
@@ -35,3 +36,7 @@ export const store = configureStore({
 });
 
 export const persistor = persistStore(store);
+
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;
+export const useAppDispatch: () => AppDispatch = useDispatch;
