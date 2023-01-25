@@ -1,9 +1,10 @@
-import { useDispatch } from 'react-redux';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import * as yup from 'yup';
 import { toast } from 'react-toastify';
 import { logIn } from 'redux/auth/auth-operations';
 import s from './LoginForm.module.css';
+import { User } from 'types/auth';
+import { useAppDispatch } from 'redux/store';
 
 const initialValues = {
   email: '',
@@ -23,12 +24,19 @@ const schema = yup.object().shape({
 });
 
 const LoginForm = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const notify = () => toast.error('Incorrect email or password');
 
-  const handleSubmit = ({ email, password }, { resetForm }) => {
+  const handleSubmit = (
+    { email, password }: Pick<User, 'email' | 'password'>,
+    {
+      resetForm,
+    }: {
+      resetForm: Function;
+    }
+  ) => {
     dispatch(logIn({ email, password })).then(data => {
-      if (data.error) {
+      if (data.meta.requestStatus === 'rejected') {
         notify();
         resetForm({
           values: {

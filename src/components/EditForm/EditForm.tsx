@@ -1,5 +1,10 @@
-import { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import {
+  useState,
+  useEffect,
+  ChangeEventHandler,
+  FormEventHandler,
+} from 'react';
+import { useSelector } from 'react-redux';
 import {
   getEditedContact,
   getIsLoading,
@@ -7,26 +12,29 @@ import {
 import { updateContact } from 'redux/contacts/contacts-operations';
 import { setEditedContact } from 'redux/contacts/contactsSlice';
 import s from './EditForm.module.css';
+import { useAppDispatch } from 'redux/store';
 
 const EditForm = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const editedContact = useSelector(getEditedContact);
   const isLoading = useSelector(getIsLoading);
 
-  const [name, setName] = useState(editedContact.name);
-  const [number, setNumber] = useState(editedContact.number);
+  const [name, setName] = useState(editedContact?.name || '');
+  const [number, setNumber] = useState(editedContact?.number || '');
 
   useEffect(() => {
-    setName(editedContact.name);
-    setNumber(editedContact.number);
-  }, [editedContact.name, editedContact.number]);
+    setName(editedContact?.name || '');
+    setNumber(editedContact?.number || '');
+  }, [editedContact?.name, editedContact?.number]);
 
-  const onNameChange = event => setName(event.target.value);
-  const onNumberChange = event => setNumber(event.target.value);
+  const onNameChange: ChangeEventHandler<HTMLInputElement> = event =>
+    setName(event.target.value);
+  const onNumberChange: ChangeEventHandler<HTMLInputElement> = event =>
+    setNumber(event.target.value);
 
-  const handleSubmit = event => {
+  const handleSubmit: FormEventHandler<HTMLFormElement> = event => {
     event.preventDefault();
-    const id = editedContact.id;
+    const id = editedContact?.id || '';
     const newContact = { name, number, id };
     dispatch(updateContact(newContact));
     dispatch(setEditedContact(null));

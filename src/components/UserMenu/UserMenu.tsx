@@ -1,11 +1,12 @@
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { FiLogOut } from 'react-icons/fi';
 import { logOut } from 'redux/auth/auth-operations';
 import { getUser } from 'redux/auth/auth-selectors';
 import s from './UserMenu.module.css';
+import { useAppDispatch } from 'redux/store';
 
 export default function UserMenu() {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const user = useSelector(getUser);
 
   return (

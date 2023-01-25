@@ -1,13 +1,15 @@
-import { useDispatch, useSelector } from 'react-redux';
+import { ChangeEventHandler } from 'react';
+import { useSelector } from 'react-redux';
 import { setFilter } from 'redux/contacts/filterSlice';
 import { getFilter } from 'redux/contacts/contacts-selectors';
 import s from './Filter.module.css';
+import { useAppDispatch } from 'redux/store';
 
 const Filter = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const filter = useSelector(getFilter);
 
-  const onFilterChange = event => {
+  const onFilterChange: ChangeEventHandler<HTMLInputElement> = event => {
     dispatch(setFilter(event.target.value));
   };
 

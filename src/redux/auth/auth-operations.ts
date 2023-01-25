@@ -19,7 +19,7 @@ export const register = createAsyncThunk<
     token: string | null;
     user: User;
   },
-  Pick<User, 'email' | 'name'>,
+  Pick<User, 'email' | 'name' | 'password'>,
   {
     state: {
       auth: AuthSlice;
@@ -42,7 +42,7 @@ export const logIn = createAsyncThunk<
     token: string | null;
     user: User;
   },
-  Pick<User, 'email' | 'name'>,
+  Pick<User, 'email' | 'password'>,
   {
     state: {
       auth: AuthSlice;

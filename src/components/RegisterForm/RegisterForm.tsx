@@ -1,9 +1,10 @@
-import { useDispatch } from 'react-redux';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import * as yup from 'yup';
 import { toast } from 'react-toastify';
 import { register } from 'redux/auth/auth-operations';
 import s from './RegisterForm.module.css';
+import { useAppDispatch } from 'redux/store';
+import { User } from 'types/auth';
 
 const initialValues = {
   name: '',
@@ -11,8 +12,10 @@ const initialValues = {
   password: '',
 };
 
-const lettersOnly = value =>
-  /^[a-zA-Zа-яА-Я]+(([ -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$/.test(value);
+const lettersOnly = (value: string | undefined) =>
+  value
+    ? /^[a-zA-Zа-яА-Я]+(([ -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$/.test(value)
+    : false;
 
 const schema = yup.object().shape({
   name: yup
@@ -35,12 +38,19 @@ const schema = yup.object().shape({
 });
 
 const RegisterForm = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const notify = () => toast.error('A user with the same email already exists');
 
-  const handleSubmit = ({ name, email, password }, { resetForm }) => {
+  const handleSubmit = (
+    { name, email, password }: Pick<User, 'name' | 'email' | 'password'>,
+    {
+      resetForm,
+    }: {
+      resetForm: Function;
+    }
+  ) => {
     dispatch(register({ name, email, password })).then(data => {
-      if (data.error) {
+      if (data.meta.requestStatus === 'rejected') {
         notify();
         resetForm({
           values: {
