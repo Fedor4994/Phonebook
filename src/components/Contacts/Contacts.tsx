@@ -20,7 +20,7 @@ const Contacts = (props: ContactsProps) => {
       ))}
     </ul>
   ) : (
-    <h3 className={s.empty}>There are no contacts here</h3>
+    <h3 className={s.empty}>There are no contacts here yet</h3>
   );
 };
 
