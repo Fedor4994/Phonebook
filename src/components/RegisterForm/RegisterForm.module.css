@@ -19,6 +19,10 @@
   padding: 3px 10px;
 }
 .registerButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
   width: 420px;
   height: 40px;
   border: none;

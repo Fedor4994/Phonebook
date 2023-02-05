@@ -5,6 +5,9 @@ import { logIn } from 'redux/auth/auth-operations';
 import s from './LoginForm.module.css';
 import { User } from 'types/auth';
 import { useAppDispatch } from 'redux/store';
+import { getIsLoading } from 'redux/auth/auth-selectors';
+import { useSelector } from 'react-redux';
+import { Blocks } from 'react-loader-spinner';
 
 const initialValues = {
   email: '',
@@ -26,6 +29,7 @@ const schema = yup.object().shape({
 const LoginForm = () => {
   const dispatch = useAppDispatch();
   const notify = () => toast.error('Incorrect email or password');
+  const isLoading = useSelector(getIsLoading);
 
   const handleSubmit = (
     { email, password }: Pick<User, 'email' | 'password'>,
@@ -70,8 +74,22 @@ const LoginForm = () => {
           <ErrorMessage className={s.error} component="div" name="password" />
         </label>
 
-        <button className={s.loginButton} type="submit">
-          Login
+        <button disabled={isLoading} className={s.loginButton} type="submit">
+          {isLoading ? (
+            <>
+              Login process in progress...
+              <Blocks
+                visible={true}
+                height="95%"
+                width="50"
+                ariaLabel="blocks-loading"
+                wrapperStyle={{}}
+                wrapperClass="blocks-wrapper"
+              />
+            </>
+          ) : (
+            'Login'
+          )}
         </button>
       </Form>
     </Formik>

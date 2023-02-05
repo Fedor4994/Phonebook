@@ -7,6 +7,7 @@ export type AuthSlice = {
   token: string | null;
   isLoggedIn: boolean;
   isFetchingCurrentUser: boolean;
+  isLoading: boolean;
 };
 
 const initialState: AuthSlice = {
@@ -14,6 +15,7 @@ const initialState: AuthSlice = {
   token: null,
   isLoggedIn: false,
   isFetchingCurrentUser: false,
+  isLoading: false,
 };
 
 const authSilce = createSlice({
@@ -22,15 +24,29 @@ const authSilce = createSlice({
   reducers: {},
   extraReducers: builder =>
     builder
+      .addCase(register.pending, state => {
+        state.isLoading = true;
+      })
       .addCase(register.fulfilled, (state, { payload }) => {
         state.user = payload.user;
         state.token = payload.token;
         state.isLoggedIn = true;
+        state.isLoading = false;
+      })
+      .addCase(register.rejected, state => {
+        state.isLoading = false;
+      })
+      .addCase(logIn.pending, state => {
+        state.isLoading = true;
       })
       .addCase(logIn.fulfilled, (state, { payload }) => {
         state.user = payload.user;
         state.token = payload.token;
         state.isLoggedIn = true;
+        state.isLoading = false;
+      })
+      .addCase(logIn.rejected, state => {
+        state.isLoading = false;
       })
       .addCase(logOut.fulfilled, state => {
         state.user = { name: '', email: '' };

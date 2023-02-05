@@ -5,6 +5,9 @@ import { register } from 'redux/auth/auth-operations';
 import s from './RegisterForm.module.css';
 import { useAppDispatch } from 'redux/store';
 import { User } from 'types/auth';
+import { useSelector } from 'react-redux';
+import { getIsLoading } from 'redux/auth/auth-selectors';
+import { Blocks } from 'react-loader-spinner';
 
 const initialValues = {
   name: '',
@@ -40,6 +43,7 @@ const schema = yup.object().shape({
 const RegisterForm = () => {
   const dispatch = useAppDispatch();
   const notify = () => toast.error('A user with the same email already exists');
+  const isLoading = useSelector(getIsLoading);
 
   const handleSubmit = (
     { name, email, password }: Pick<User, 'name' | 'email' | 'password'>,
@@ -100,8 +104,22 @@ const RegisterForm = () => {
           <ErrorMessage className={s.error} component="div" name="password" />
         </label>
 
-        <button className={s.registerButton} type="submit">
-          Register
+        <button disabled={isLoading} className={s.registerButton} type="submit">
+          {isLoading ? (
+            <>
+              Register process in progress...
+              <Blocks
+                visible={true}
+                height="95%"
+                width="50"
+                ariaLabel="blocks-loading"
+                wrapperStyle={{}}
+                wrapperClass="blocks-wrapper"
+              />
+            </>
+          ) : (
+            'Register'
+          )}
         </button>
       </Form>
     </Formik>
