@@ -41,18 +41,31 @@ const contactsSlice = createSlice({
         state.items.push(payload);
       })
 
-      .addCase(deleteContact.fulfilled, (state, { payload: { id } }) => {
-        state.items = state.items.filter(contact => contact.id !== id);
+      .addCase(deleteContact.fulfilled, (state, { payload }) => {
+        state.items = [
+          ...state.items.filter(contact => contact._id !== payload.message),
+        ];
       })
 
-      .addCase(updateContact.fulfilled, (state, { payload }) => {
-        state.items.forEach(contact => {
-          if (contact.id === payload.id) {
-            contact.name = payload.name;
-            contact.number = payload.number;
+      .addCase(
+        updateContact.fulfilled,
+        (
+          state,
+          {
+            payload: {
+              message: { _id, email, name, phone },
+            },
           }
-        });
-      })
+        ) => {
+          state.items.forEach(contact => {
+            if (contact._id === _id) {
+              contact.name = name || '';
+              contact.phone = phone || '';
+              contact.email = email || '';
+            }
+          });
+        }
+      )
       .addMatcher(
         isAnyOf(
           fetchContacts.pending,

@@ -13,7 +13,7 @@ const Contacts = () => {
   return contacts.length ? (
     <ul className={s.contactsList}>
       {visibleContacts.map(contact => (
-        <li key={contact.id}>
+        <li key={contact._id}>
           <ContactItem contact={contact} />
         </li>
       ))}

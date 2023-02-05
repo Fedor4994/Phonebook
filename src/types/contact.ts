@@ -1,5 +1,15 @@
 export type Contact = {
-  id: string;
+  _id: string;
   name: string;
-  number: string;
+  email: string;
+  phone: string;
+  favorite: string;
+  userId: string;
+};
+
+export type ContactForUpdate = {
+  _id: string;
+  name?: string;
+  phone?: string;
+  email?: string;
 };

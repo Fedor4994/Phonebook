@@ -2,6 +2,7 @@ import { useSelector } from 'react-redux';
 import { confirmAlert } from 'react-confirm-alert';
 import { HiOutlineUserCircle } from 'react-icons/hi';
 import { FiPhone } from 'react-icons/fi';
+import { SiMaildotru } from 'react-icons/si';
 import { getContacts, getIsLoading } from 'redux/contacts/contacts-selectors';
 import { setEditedContact } from 'redux/contacts/contactsSlice';
 import { deleteContact } from 'redux/contacts/contacts-operations';
@@ -14,13 +15,13 @@ interface ContactProps {
 }
 
 const ContactItem = ({ contact }: ContactProps) => {
-  const { name, number } = contact;
+  const { name, phone, email } = contact;
   const dispatch = useAppDispatch();
   const isLoading = useSelector(getIsLoading);
   const contacts = useSelector(getContacts);
 
   const handleEdit = (id: string) => {
-    const editedContact = contacts.find(contact => contact.id === id);
+    const editedContact = contacts.find(contact => contact._id === id);
     dispatch(setEditedContact(editedContact));
   };
 
@@ -56,30 +57,43 @@ const ContactItem = ({ contact }: ContactProps) => {
 
   return (
     <div className={s.contact}>
-      <p className={s.contactName}>
-        <HiOutlineUserCircle />
-        {name}
-      </p>
-      <p className={s.contactNumber}>
-        <FiPhone />
-        {number}
-      </p>
+      {name && (
+        <p className={s.contactName}>
+          <HiOutlineUserCircle />
+          {name}
+        </p>
+      )}
+
+      {phone && (
+        <p className={s.contactName}>
+          <FiPhone />
+          {phone}
+        </p>
+      )}
+
+      {email && (
+        <p className={s.contactName}>
+          <SiMaildotru />
+          {email}
+        </p>
+      )}
+
       <div className={s.contactButtons}>
         <button
           disabled={isLoading}
-          onClick={() => handleDelete(contact.id)}
+          onClick={() => handleDelete(contact._id)}
           className={s.contactsButton}
         >
           Delete
         </button>
         <button
           disabled={isLoading}
-          onClick={() => handleEdit(contact.id)}
+          onClick={() => handleEdit(contact._id)}
           className={s.contactsButton}
         >
           Edit
         </button>
-        <a className={s.callButton} href={`tel: ${number}`}>
+        <a className={s.callButton} href={`tel: ${phone}`}>
           Call
         </a>
       </div>

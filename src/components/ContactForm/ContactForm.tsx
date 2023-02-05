@@ -11,7 +11,8 @@ import { Contact } from 'types/contact';
 
 const initialValues = {
   name: '',
-  number: '',
+  phone: '',
+  email: '',
 };
 
 const lettersOnly = (value: string | undefined) =>
@@ -19,22 +20,16 @@ const lettersOnly = (value: string | undefined) =>
     ? /^[a-zA-Zа-яА-Я]+(([ -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$/.test(value)
     : false;
 
-const digitsOnly = (value: string | undefined) =>
-  value
-    ? /\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}/.test(
-        value
-      )
-    : false;
+const phoneRegExp =
+  /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
 
 const schema = yup.object().shape({
   name: yup
     .string()
     .required('Name is a required field')
     .test('Letters only', 'Name may contain only letters.', lettersOnly),
-  number: yup
-    .string()
-    .required('Phone number is a required field')
-    .test('Digits only', 'Must be a valid phone number', digitsOnly),
+  phone: yup.string().matches(phoneRegExp, 'Phone number is not valid'),
+  email: yup.string(),
 });
 
 const ContactForm = () => {
@@ -45,14 +40,14 @@ const ContactForm = () => {
     toast.error(`${name} is already in contacts`);
 
   const onSubmit = (
-    { name, number }: Pick<Contact, 'name' | 'number'>,
+    { name, phone, email }: Pick<Contact, 'name' | 'phone' | 'email'>,
     { resetForm }: { resetForm: () => void }
   ) => {
     const isRepeatedContact = contacts.find(contact => contact.name === name);
     if (isRepeatedContact) {
       notify(name);
     } else {
-      dispatch(addContact({ name, number }));
+      dispatch(addContact({ name, phone, email }));
     }
     resetForm();
   };
@@ -79,9 +74,19 @@ const ContactForm = () => {
             className={s.contactInput}
             placeholder="Phone number"
             type="tel"
-            name="number"
+            name="phone"
           />
-          <ErrorMessage className={s.error} component="div" name="number" />
+          <ErrorMessage className={s.error} component="div" name="phone" />
+        </label>
+
+        <label className={s.contactLabel}>
+          <Field
+            className={s.contactInput}
+            placeholder="Email"
+            type="email"
+            name="email"
+          />
+          <ErrorMessage className={s.error} component="div" name="email" />
         </label>
 
         <button disabled={isLoading} type="submit" className={s.submitButton}>

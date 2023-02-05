@@ -41,8 +41,8 @@ const authSilce = createSlice({
         state.isFetchingCurrentUser = true;
       })
       .addCase(getCurrentUser.fulfilled, (state, { payload }) => {
-        state.user.email = payload.email;
-        state.user.name = payload.name;
+        state.user.email = payload.user.email;
+        state.user.name = payload.user.name;
         state.isLoggedIn = true;
         state.isFetchingCurrentUser = false;
       })

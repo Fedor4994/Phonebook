@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { Contact } from 'types/contact';
+import { Contact, ContactForUpdate } from 'types/contact';
 import { ContactsSlice } from './contactsSlice';
 
 export const fetchContacts = createAsyncThunk<
@@ -35,7 +35,7 @@ export const fetchContacts = createAsyncThunk<
 
 export const addContact = createAsyncThunk<
   Contact,
-  Pick<Contact, 'name' | 'number'>,
+  Pick<Contact, 'name' | 'phone' | 'email'>,
   {
     state: {
       contacts: ContactsSlice;
@@ -43,9 +43,9 @@ export const addContact = createAsyncThunk<
   }
 >(
   'contacts/addContact',
-  async ({ name, number }, { rejectWithValue }) => {
+  async ({ name, phone, email }, { rejectWithValue }) => {
     try {
-      const { data } = await axios.post('/contacts', { name, number });
+      const { data } = await axios.post('/contacts', { name, phone, email });
       return data;
     } catch (error) {
       if (error instanceof Error) {
@@ -64,7 +64,7 @@ export const addContact = createAsyncThunk<
 );
 
 export const deleteContact = createAsyncThunk<
-  Contact,
+  { message: string },
   string,
   {
     state: {
@@ -76,6 +76,7 @@ export const deleteContact = createAsyncThunk<
   async (contactId, { rejectWithValue }) => {
     try {
       const { data } = await axios.delete(`/contacts/${contactId}`);
+      data.message = contactId;
       return data;
     } catch (error) {
       if (error instanceof Error) {
@@ -94,8 +95,8 @@ export const deleteContact = createAsyncThunk<
 );
 
 export const updateContact = createAsyncThunk<
-  Contact,
-  Contact,
+  { message: ContactForUpdate },
+  ContactForUpdate,
   {
     state: {
       contacts: ContactsSlice;
@@ -105,12 +106,13 @@ export const updateContact = createAsyncThunk<
   'contacts/updateContact',
   async (newContact, { rejectWithValue }) => {
     try {
-      const name = newContact.name;
-      const number = newContact.number;
-      const { data } = await axios.patch(`/contacts/${newContact.id}`, {
+      const { name, phone, email, _id } = newContact;
+      const { data } = await axios.put(`/contacts/${_id}`, {
         name,
-        number,
+        phone,
+        email,
       });
+      data.message = newContact;
       return data;
     } catch (error) {
       if (error instanceof Error) {

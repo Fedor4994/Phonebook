@@ -3,7 +3,7 @@ import axios from 'axios';
 import { User } from 'types/auth';
 import { AuthSlice } from './authSlice';
 
-axios.defaults.baseURL = 'https://connections-api.herokuapp.com';
+axios.defaults.baseURL = 'https://connection-api-fsv.onrender.com/api';
 
 const token = {
   set(token: string | null) {
@@ -27,7 +27,7 @@ export const register = createAsyncThunk<
   }
 >('auth/register', async (credentials, { rejectWithValue }) => {
   try {
-    const { data } = await axios.post('/users/signup', credentials);
+    const { data } = await axios.post('/users/register', credentials);
     token.set(data.token);
     return data;
   } catch (error) {
@@ -64,7 +64,7 @@ export const logOut = createAsyncThunk(
   'auth/logOut',
   async (_, { rejectWithValue }) => {
     try {
-      await axios.post('/users/logout');
+      // await axios.post('/users/logout');
       token.unset();
     } catch (error) {
       if (error instanceof Error) {
@@ -75,7 +75,7 @@ export const logOut = createAsyncThunk(
 );
 
 export const getCurrentUser = createAsyncThunk<
-  User,
+  { user: User },
   undefined,
   {
     state: {
