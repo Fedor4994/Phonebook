@@ -3,7 +3,7 @@ export type Contact = {
   name: string;
   email: string;
   phone: string;
-  favorite: string;
+  favorite: boolean;
   userId: string;
 };
 

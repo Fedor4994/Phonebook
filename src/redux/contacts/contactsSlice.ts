@@ -5,6 +5,7 @@ import {
   addContact,
   deleteContact,
   updateContact,
+  updateStatusContact,
 } from './contacts-operations';
 
 export type ContactsSlice = {
@@ -45,6 +46,13 @@ const contactsSlice = createSlice({
         state.items = [
           ...state.items.filter(contact => contact._id !== payload.message),
         ];
+      })
+      .addCase(updateStatusContact.fulfilled, (state, { payload }) => {
+        state.items.forEach(contact => {
+          if (contact._id === payload.message._id) {
+            contact.favorite = payload.message.favorite;
+          }
+        });
       })
 
       .addCase(

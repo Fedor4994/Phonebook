@@ -129,3 +129,21 @@ export const updateContact = createAsyncThunk<
     },
   }
 );
+
+export const updateStatusContact = createAsyncThunk<
+  { message: { _id: string; favorite: boolean } },
+  { _id: string; favorite: boolean }
+>('contacts/updateStatusContact', async (newStatus, { rejectWithValue }) => {
+  const { _id, favorite } = newStatus;
+  try {
+    const { data } = await axios.patch(`/contacts/${_id}/favorite`, {
+      favorite,
+    });
+    data.message = { _id, favorite };
+    return data;
+  } catch (error) {
+    if (error instanceof Error) {
+      return rejectWithValue(error.message);
+    }
+  }
+});

@@ -3,9 +3,13 @@ import { confirmAlert } from 'react-confirm-alert';
 import { HiOutlineUserCircle } from 'react-icons/hi';
 import { FiPhone } from 'react-icons/fi';
 import { SiMaildotru } from 'react-icons/si';
+import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
 import { getContacts, getIsLoading } from 'redux/contacts/contacts-selectors';
 import { setEditedContact } from 'redux/contacts/contactsSlice';
-import { deleteContact } from 'redux/contacts/contacts-operations';
+import {
+  deleteContact,
+  updateStatusContact,
+} from 'redux/contacts/contacts-operations';
 import s from './Contact.module.css';
 import { Contact } from 'types/contact';
 import { useAppDispatch } from 'redux/store';
@@ -15,7 +19,7 @@ interface ContactProps {
 }
 
 const ContactItem = ({ contact }: ContactProps) => {
-  const { name, phone, email } = contact;
+  const { name, phone, email, favorite } = contact;
   const dispatch = useAppDispatch();
   const isLoading = useSelector(getIsLoading);
   const contacts = useSelector(getContacts);
@@ -23,6 +27,16 @@ const ContactItem = ({ contact }: ContactProps) => {
   const handleEdit = (id: string) => {
     const editedContact = contacts.find(contact => contact._id === id);
     dispatch(setEditedContact(editedContact));
+  };
+
+  const handleStatusChange = (id: string) => {
+    const changedContact = contacts.find(contact => contact._id === id)!;
+    dispatch(
+      updateStatusContact({
+        _id: changedContact._id,
+        favorite: !changedContact.favorite,
+      })
+    );
   };
 
   const handleDelete = (id: string) => {
@@ -57,6 +71,16 @@ const ContactItem = ({ contact }: ContactProps) => {
 
   return (
     <div className={s.contact}>
+      <div
+        onClick={() => handleStatusChange(contact._id)}
+        className={s.favorite}
+      >
+        {favorite ? (
+          <AiFillHeart size="100%" />
+        ) : (
+          <AiOutlineHeart size="100%" />
+        )}
+      </div>
       {name && (
         <p className={s.contactName}>
           <HiOutlineUserCircle />
