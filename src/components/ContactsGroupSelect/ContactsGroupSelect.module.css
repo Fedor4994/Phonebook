@@ -1,0 +1,22 @@
+.select {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.selectButton {
+  width: 40%;
+  height: 30px;
+  border: none;
+  cursor: pointer;
+  color: #fff;
+  font-size: 18px;
+  background-color: rgba(156, 163, 175, 1);
+  border-radius: 10px;
+}
+
+.selectButton:hover {
+  background-color: rgb(114, 146, 160);
+}

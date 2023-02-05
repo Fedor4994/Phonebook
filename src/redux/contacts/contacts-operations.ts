@@ -33,6 +33,36 @@ export const fetchContacts = createAsyncThunk<
   }
 );
 
+export const fetchFavoriteContacts = createAsyncThunk<
+  Contact[],
+  undefined,
+  {
+    state: {
+      contacts: ContactsSlice;
+    };
+  }
+>(
+  'contacts/fetchFavorite',
+  async (_, { rejectWithValue }) => {
+    try {
+      const { data } = await axios.get('/contacts?favorite=true');
+      return data;
+    } catch (error) {
+      if (error instanceof Error) {
+        return rejectWithValue(error.message);
+      }
+    }
+  },
+  {
+    condition: (_, { getState }) => {
+      const { isLoading } = getState().contacts;
+      if (isLoading) {
+        return false;
+      }
+    },
+  }
+);
+
 export const addContact = createAsyncThunk<
   Contact,
   Pick<Contact, 'name' | 'phone' | 'email'>,

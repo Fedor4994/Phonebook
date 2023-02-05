@@ -6,6 +6,7 @@ import {
   deleteContact,
   updateContact,
   updateStatusContact,
+  fetchFavoriteContacts,
 } from './contacts-operations';
 
 export type ContactsSlice = {
@@ -35,6 +36,10 @@ const contactsSlice = createSlice({
   extraReducers: builder =>
     builder
       .addCase(fetchContacts.fulfilled, (state, { payload }) => {
+        state.items = payload;
+      })
+
+      .addCase(fetchFavoriteContacts.fulfilled, (state, { payload }) => {
         state.items = payload;
       })
 
@@ -77,6 +82,7 @@ const contactsSlice = createSlice({
       .addMatcher(
         isAnyOf(
           fetchContacts.pending,
+          fetchFavoriteContacts.pending,
           addContact.pending,
           deleteContact.pending,
           updateContact.pending
@@ -88,6 +94,7 @@ const contactsSlice = createSlice({
       .addMatcher(
         isAnyOf(
           fetchContacts.fulfilled,
+          fetchFavoriteContacts.fulfilled,
           addContact.fulfilled,
           deleteContact.fulfilled,
           updateContact.fulfilled
@@ -100,6 +107,7 @@ const contactsSlice = createSlice({
       .addMatcher(
         isAnyOf(
           fetchContacts.rejected,
+          fetchFavoriteContacts.rejected,
           addContact.rejected,
           deleteContact.rejected,
           updateContact.rejected
