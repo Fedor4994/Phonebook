@@ -35,3 +35,15 @@
   background-color: rgb(72, 106, 121);
   color: #fff;
 }
+
+@media screen and (min-width: 320px) and (max-width: 768px) {
+  .selectButton {
+    height: 35px;
+    font-size: 14px;
+  }
+
+  .activeSelectButton {
+    height: 35px;
+    font-size: 14px;
+  }
+}

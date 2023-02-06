@@ -48,7 +48,7 @@
 
 @media screen and (min-width: 320px) and (max-width: 768px) {
   .welcome {
-    font-size: 30px;
+    font-size: 28px;
   }
 
   .homeButton {
@@ -62,11 +62,11 @@
     padding: 25px;
     display: flex;
     flex-direction: column;
-    height: 80vh;
+    height: 40vh;
     background-image: url('../addressbook.png');
     background-repeat: no-repeat;
-    background-position: left bottom;
+    background-position: 110px 100px;
     /* background-position: 910px -50px; */
-    background-size: 400px;
+    background-size: 250px;
   }
 }
