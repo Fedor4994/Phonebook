@@ -27,15 +27,15 @@ const ScrollButton = () => {
     <button
       style={{
         position: 'fixed',
-        right: '20px',
-        bottom: '20px',
+        left: '10px',
+        bottom: '15px',
         background: 'transparent',
         border: 'none',
         cursor: 'pointer',
       }}
       onClick={scrollToTop}
     >
-      <BsArrowUpCircleFill size={50} color="#fff" />
+      <BsArrowUpCircleFill size={40} color="#fff" />
     </button>
   ) : (
     <></>

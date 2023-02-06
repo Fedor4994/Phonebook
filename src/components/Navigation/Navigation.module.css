@@ -55,21 +55,29 @@
   align-items: center;
 }
 
-@media screen and (min-width: 320px) and (max-width: 768px) {
+.userMenuWrapper {
+  color: #fff;
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+@media screen and (min-width: 320px) and (max-width: 767px) {
   .activeNavLink {
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 4px 10px;
     background-color: #c5273c;
-    width: 40px;
+    width: 60px;
     border-radius: 10px;
     font-size: 14px;
     color: #fff;
   }
 
   .navLink {
-    width: 40px;
+    width: 60px;
     padding: 4px 10px;
     font-size: 14px;
   }
@@ -77,8 +85,10 @@
   .navigation {
     display: flex;
     align-items: center;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
 
-    justify-content: space-around;
     height: 100%;
   }
 }

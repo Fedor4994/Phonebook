@@ -12,9 +12,14 @@ const Navigation = () => {
     <nav className={s.navigation}>
       <Link className={s.logo} to="/">
         <RiContactsBook2Fill size={60} />
-        {width > 1280 && <span className={s.logoText}>PHONEBOOK</span>}
+        <span className={s.logoText}>PHONEBOOK</span>
       </Link>
 
+      {isLoggedIn && width < 768 && (
+        <div className={s.userMenuWrapper}>
+          <UserMenu />
+        </div>
+      )}
       <ul className={s.navigationList}>
         <li>
           <NavLink
@@ -39,7 +44,11 @@ const Navigation = () => {
                 Contacts
               </NavLink>
             </li>
-            <UserMenu />
+            {width > 767 && (
+              <div className={s.userMenuWrapper}>
+                <UserMenu />
+              </div>
+            )}
           </>
         ) : (
           <>
