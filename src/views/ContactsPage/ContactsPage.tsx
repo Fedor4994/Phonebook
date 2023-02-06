@@ -19,6 +19,7 @@ import {
 import s from './ContactsPage.module.css';
 import { useAppDispatch } from 'redux/store';
 import ContactsGroupSelect from 'components/ContactsGroupSelect/ContactsGroupSelect';
+import ScrollButton from 'components/ScrollButton/ScrollButton';
 
 const ContactsPage = () => {
   const dispatch = useAppDispatch();
@@ -67,6 +68,8 @@ const ContactsPage = () => {
           <ContactForm />
         </div>
       )}
+
+      <ScrollButton />
     </div>
   );
 };

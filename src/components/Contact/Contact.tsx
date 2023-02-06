@@ -27,6 +27,10 @@ const ContactItem = ({ contact }: ContactProps) => {
   const handleEdit = (id: string) => {
     const editedContact = contacts.find(contact => contact._id === id);
     dispatch(setEditedContact(editedContact));
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
   };
 
   const handleStatusChange = (id: string) => {
