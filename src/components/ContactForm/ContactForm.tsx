@@ -15,10 +15,6 @@ const initialValues = {
   email: '',
 };
 
-const lettersOnly = (value: string | undefined) =>
-  value
-    ? /^[a-zA-Zа-яА-Я]+(([ -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$/.test(value)
-    : false;
 
 const phoneRegExp =
   /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
@@ -26,8 +22,7 @@ const phoneRegExp =
 const schema = yup.object().shape({
   name: yup
     .string()
-    .required('Name is a required field')
-    .test('Letters only', 'Name may contain only letters.', lettersOnly),
+    .required('Name is a required field')б
   phone: yup.string().matches(phoneRegExp, 'Phone number is not valid'),
   email: yup.string(),
 });
