@@ -15,14 +15,11 @@ const initialValues = {
   email: '',
 };
 
-
 const phoneRegExp =
   /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
 
 const schema = yup.object().shape({
-  name: yup
-    .string()
-    .required('Name is a required field')б
+  name: yup.string().required('Name is a required field'),
   phone: yup.string().matches(phoneRegExp, 'Phone number is not valid'),
   email: yup.string(),
 });
