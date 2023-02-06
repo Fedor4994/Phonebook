@@ -17,6 +17,20 @@
   border-radius: 10px;
 }
 
+.activeSelectButton {
+  width: 40%;
+  height: 30px;
+  border: none;
+  cursor: pointer;
+  color: #fff;
+  font-size: 18px;
+  background-color: rgb(72, 106, 121);
+  border-radius: 10px;
+  border: 1px solid rgba(156, 163, 175, 1);
+}
+
 .selectButton:hover {
-  background-color: rgb(114, 146, 160);
+  border: 1px solid rgba(156, 163, 175, 1);
+  background-color: rgb(72, 106, 121);
+  color: #fff;
 }

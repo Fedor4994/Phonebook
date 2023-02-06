@@ -41,7 +41,10 @@ const ContactsPage = () => {
       <div className={s.contacts}>
         <h2 className={s.addContact}>Your contacts</h2>
         <Filter />
-        <ContactsGroupSelect onGroupChange={setIsFavoriteContacts} />
+        <ContactsGroupSelect
+          onGroupChange={setIsFavoriteContacts}
+          isFavoriteContacts={isFavoriteContacts}
+        />
         {error && 'Something goes wrong :( '}
         {isLoading && !error ? (
           <ThreeDots
