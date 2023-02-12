@@ -111,3 +111,28 @@ export const getCurrentUser = createAsyncThunk<
     },
   }
 );
+
+export const updateAvatar = createAsyncThunk<
+  {
+    avatarURL: string;
+  },
+  { avatar: FormData },
+  {
+    state: {
+      auth: AuthSlice;
+    };
+  }
+>('auth/updateAvatar', async ({ avatar }, { rejectWithValue }) => {
+  try {
+    const { data } = await axios.patch('/users/avatars', avatar, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+    return data;
+  } catch (error) {
+    if (error instanceof Error) {
+      return rejectWithValue(error.message);
+    }
+  }
+});

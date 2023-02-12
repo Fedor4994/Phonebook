@@ -1,9 +1,15 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { User } from 'types/auth';
-import { getCurrentUser, logIn, logOut, register } from './auth-operations';
+import {
+  getCurrentUser,
+  logIn,
+  logOut,
+  register,
+  updateAvatar,
+} from './auth-operations';
 
 export type AuthSlice = {
-  user: Pick<User, 'name' | 'email'>;
+  user: Pick<User, 'name' | 'email' | 'avatarURL'>;
   token: string | null;
   isLoggedIn: boolean;
   isFetchingCurrentUser: boolean;
@@ -11,7 +17,7 @@ export type AuthSlice = {
 };
 
 const initialState: AuthSlice = {
-  user: { name: '', email: '' },
+  user: { name: '', email: '', avatarURL: '' },
   token: null,
   isLoggedIn: false,
   isFetchingCurrentUser: false,
@@ -49,7 +55,7 @@ const authSilce = createSlice({
         state.isLoading = false;
       })
       .addCase(logOut.fulfilled, state => {
-        state.user = { name: '', email: '' };
+        state.user = { name: '', email: '', avatarURL: '' };
         state.token = null;
         state.isLoggedIn = false;
       })
@@ -59,11 +65,15 @@ const authSilce = createSlice({
       .addCase(getCurrentUser.fulfilled, (state, { payload }) => {
         state.user.email = payload.user.email;
         state.user.name = payload.user.name;
+        state.user.avatarURL = payload.user.avatarURL;
         state.isLoggedIn = true;
         state.isFetchingCurrentUser = false;
       })
       .addCase(getCurrentUser.rejected, state => {
         state.isFetchingCurrentUser = false;
+      })
+      .addCase(updateAvatar.fulfilled, (state, { payload }) => {
+        state.user.avatarURL = payload.avatarURL;
       }),
 });
 
