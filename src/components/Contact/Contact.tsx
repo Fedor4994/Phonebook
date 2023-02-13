@@ -1,13 +1,20 @@
+import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { confirmAlert } from 'react-confirm-alert';
 import { HiOutlineUserCircle } from 'react-icons/hi';
 import { FiPhone } from 'react-icons/fi';
 import { SiMaildotru } from 'react-icons/si';
 import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
-import { getContacts, getIsLoading } from 'redux/contacts/contacts-selectors';
+import { MdAddPhotoAlternate } from 'react-icons/md';
+import {
+  getContacts,
+  getEditedContact,
+  getIsLoading,
+} from 'redux/contacts/contacts-selectors';
 import { setEditedContact } from 'redux/contacts/contactsSlice';
 import {
   deleteContact,
+  updateContactAvatar,
   updateStatusContact,
 } from 'redux/contacts/contacts-operations';
 import s from './Contact.module.css';
@@ -19,10 +26,26 @@ interface ContactProps {
 }
 
 const ContactItem = ({ contact }: ContactProps) => {
-  const { name, phone, email, favorite } = contact;
+  const { name, phone, email, favorite, avatarURL } = contact;
   const dispatch = useAppDispatch();
   const isLoading = useSelector(getIsLoading);
   const contacts = useSelector(getContacts);
+  const isEdited = useSelector(getEditedContact);
+
+  const [modalImage, setModalImage] = useState('');
+
+  const onEscClose = (event: KeyboardEvent) => {
+    if (event.code === 'Escape') {
+      setModalImage('');
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener('keydown', onEscClose);
+    return () => {
+      window.removeEventListener('keydown', onEscClose);
+    };
+  }, []);
 
   const handleEdit = (id: string) => {
     const editedContact = contacts.find(contact => contact._id === id);
@@ -73,6 +96,28 @@ const ContactItem = ({ contact }: ContactProps) => {
     });
   };
 
+  const handleAvatarChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const formData = new FormData();
+
+    const file = e.currentTarget.files![0];
+    formData.append('avatar', file);
+    dispatch(updateContactAvatar({ avatar: formData, _id: contact._id }));
+    dispatch(setEditedContact(null));
+  };
+
+  const handleAvatarClick = (id: string) => {
+    if (!isEdited) {
+      const changedContact = contacts.find(contact => contact._id === id);
+      setModalImage(changedContact?.avatarURL || '');
+    }
+  };
+
+  const closeModal = (event: React.MouseEvent<HTMLElement>) => {
+    if (event.target === event.currentTarget) {
+      setModalImage('');
+    }
+  };
+
   return (
     <div className={s.contact}>
       <div
@@ -85,26 +130,55 @@ const ContactItem = ({ contact }: ContactProps) => {
           <AiOutlineHeart size="100%" />
         )}
       </div>
-      {name && (
-        <p className={s.contactName}>
-          <HiOutlineUserCircle />
-          {name}
-        </p>
-      )}
+      <div className={s.contactInfoWrapper}>
+        {avatarURL && (
+          <label
+            onClick={() => handleAvatarClick(contact._id)}
+            className={s.uploadAvatar}
+          >
+            {isEdited && (
+              <input
+                className={s.uploadInput}
+                onChange={handleAvatarChange}
+                type="file"
+                name="avatar"
+                aria-label="qweqwe"
+              />
+            )}
 
-      {phone && (
-        <p className={s.contactName}>
-          <FiPhone />
-          {phone}
-        </p>
-      )}
+            <img className={s.avatar} src={avatarURL} alt="avatar" />
+            {isEdited?.email === contact.email && (
+              <MdAddPhotoAlternate
+                size="70%"
+                color="#01520c"
+                className={s.editIcon}
+              />
+            )}
+          </label>
+        )}
+        <div>
+          {name && (
+            <p className={s.contactName}>
+              <HiOutlineUserCircle />
+              {name}
+            </p>
+          )}
 
-      {email && (
-        <p className={s.contactName}>
-          <SiMaildotru />
-          {email}
-        </p>
-      )}
+          {phone && (
+            <p className={s.contactName}>
+              <FiPhone />
+              {phone}
+            </p>
+          )}
+
+          {email && (
+            <p className={s.contactName}>
+              <SiMaildotru />
+              {email}
+            </p>
+          )}
+        </div>
+      </div>
 
       <div className={s.contactButtons}>
         <button
@@ -125,6 +199,14 @@ const ContactItem = ({ contact }: ContactProps) => {
           Call
         </a>
       </div>
+
+      {modalImage && (
+        <div onClick={closeModal} className={s.backdrop}>
+          <div className={s.avatarModal}>
+            <img className={s.modalImage} src={modalImage} alt="big-avatar" />
+          </div>
+        </div>
+      )}
     </div>
   );
 };

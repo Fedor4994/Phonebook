@@ -177,3 +177,30 @@ export const updateStatusContact = createAsyncThunk<
     }
   }
 });
+
+export const updateContactAvatar = createAsyncThunk<
+  {
+    avatarURL: string;
+    _id: string;
+  },
+  { avatar: FormData; _id: string },
+  {
+    state: {
+      contacts: ContactsSlice;
+    };
+  }
+>('auth/updateContactAvatar', async ({ avatar, _id }, { rejectWithValue }) => {
+  try {
+    const { data } = await axios.patch(`contacts/${_id}/avatars`, avatar, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+    data._id = _id;
+    return data;
+  } catch (error) {
+    if (error instanceof Error) {
+      return rejectWithValue(error.message);
+    }
+  }
+});

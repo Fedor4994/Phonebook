@@ -7,6 +7,7 @@ import {
   updateContact,
   updateStatusContact,
   fetchFavoriteContacts,
+  updateContactAvatar,
 } from './contacts-operations';
 
 export type ContactsSlice = {
@@ -79,6 +80,13 @@ const contactsSlice = createSlice({
           });
         }
       )
+      .addCase(updateContactAvatar.fulfilled, (state, { payload }) => {
+        state.items.forEach(contact => {
+          if (contact._id === payload._id) {
+            contact.avatarURL = payload.avatarURL;
+          }
+        });
+      })
       .addMatcher(
         isAnyOf(
           fetchContacts.pending,

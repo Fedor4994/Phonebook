@@ -44,7 +44,7 @@
 .contactName {
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 5px;
 }
 
 .contactButtons {
@@ -123,7 +123,80 @@
   gap: 20px;
 }
 
+.avatar {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.uploadInput {
+  display: none;
+}
+
+.uploadAvatar {
+  position: relative;
+  cursor: pointer;
+  display: block;
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  transition: 200ms all ease;
+}
+
+.uploadAvatar:hover {
+  scale: 1.1;
+  opacity: 0.7;
+}
+
+.contactInfoWrapper {
+  display: flex;
+  gap: 15px;
+}
+
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+
+  background-color: rgba(0, 0, 0, 0.8);
+  z-index: 1200;
+}
+
+.avatarModal {
+  width: 30%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.editIcon {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
 @media screen and (min-width: 320px) and (max-width: 1280px) {
+  .avatarModal {
+    width: 60%;
+  }
+
+  .uploadAvatar {
+    width: 70px;
+    height: 70px;
+  }
+
+  .contactName {
+    font-size: 14px;
+  }
+
   .contact {
     display: flex;
     flex-direction: column;

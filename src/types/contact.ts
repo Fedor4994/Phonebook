@@ -4,6 +4,7 @@ export type Contact = {
   email: string;
   phone: string;
   favorite: boolean;
+  avatarURL: string;
   userId: string;
 };
 
