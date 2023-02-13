@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { toast } from 'react-toastify';
 import { User } from 'types/auth';
 import {
   getCurrentUser,
@@ -72,8 +73,16 @@ const authSilce = createSlice({
       .addCase(getCurrentUser.rejected, state => {
         state.isFetchingCurrentUser = false;
       })
+      .addCase(updateAvatar.pending, state => {
+        state.isLoading = true;
+      })
       .addCase(updateAvatar.fulfilled, (state, { payload }) => {
         state.user.avatarURL = payload.avatarURL;
+        state.isLoading = false;
+      })
+      .addCase(updateAvatar.rejected, (state, { payload }) => {
+        toast.error('Avatar must be an image');
+        state.isLoading = false;
       }),
 });
 

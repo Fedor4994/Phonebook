@@ -6,7 +6,11 @@ import { FiPhone } from 'react-icons/fi';
 import { SiMaildotru } from 'react-icons/si';
 import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
 import { RiImageEditLine } from 'react-icons/ri';
-import { getContacts, getIsLoading } from 'redux/contacts/contacts-selectors';
+import {
+  getContacts,
+  getIsLoading,
+  getIsLoadingAvatar,
+} from 'redux/contacts/contacts-selectors';
 import { setEditedContact } from 'redux/contacts/contactsSlice';
 import {
   deleteContact,
@@ -16,6 +20,7 @@ import {
 import s from './Contact.module.css';
 import { Contact } from 'types/contact';
 import { useAppDispatch } from 'redux/store';
+import { ColorRing } from 'react-loader-spinner';
 
 interface ContactProps {
   contact: Contact;
@@ -25,9 +30,11 @@ const ContactItem = ({ contact }: ContactProps) => {
   const { name, phone, email, favorite, avatarURL } = contact;
   const dispatch = useAppDispatch();
   const isLoading = useSelector(getIsLoading);
+  const isLoadingAvatar = useSelector(getIsLoadingAvatar);
   const contacts = useSelector(getContacts);
 
   const [modalImage, setModalImage] = useState('');
+  const [editedAvatarId, setEditedAvatarId] = useState('');
 
   const onEscClose = (event: KeyboardEvent) => {
     if (event.code === 'Escape') {
@@ -92,6 +99,9 @@ const ContactItem = ({ contact }: ContactProps) => {
   };
 
   const handleAvatarChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setEditedAvatarId(
+      contacts.find(elem => elem._id === contact._id)?._id || ''
+    );
     const formData = new FormData();
 
     const file = e.currentTarget.files![0];
@@ -130,6 +140,25 @@ const ContactItem = ({ contact }: ContactProps) => {
             className={s.uploadAvatar}
           >
             <img className={s.avatar} src={avatarURL} alt="avatar" />
+            {isLoadingAvatar && editedAvatarId === contact._id && (
+              <div className={s.avatarLoader}>
+                <ColorRing
+                  visible={true}
+                  height="80"
+                  width="80"
+                  ariaLabel="blocks-loading"
+                  wrapperStyle={{}}
+                  wrapperClass="blocks-wrapper"
+                  colors={[
+                    '#e15b64',
+                    '#f47e60',
+                    '#f8b26a',
+                    '#abbd81',
+                    '#849b87',
+                  ]}
+                />
+              </div>
+            )}
           </div>
         )}
         <div>

@@ -15,4 +15,6 @@ export const getVisibleContacts = (state: RootState) => {
 export const getContacts = (state: RootState) => state.contacts.items;
 
 export const getIsLoading = (state: RootState) => state.contacts.isLoading;
+export const getIsLoadingAvatar = (state: RootState) =>
+  state.contacts.isLoadingAvatar;
 export const getError = (state: RootState) => state.contacts.error;

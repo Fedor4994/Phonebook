@@ -24,12 +24,20 @@
 }
 
 .uploadAvatar {
+  position: relative;
   cursor: pointer;
   display: block;
   width: 70px;
   height: 70px;
   border-radius: 50%;
   transition: 200ms all ease;
+}
+
+.avatarLoader {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .uploadAvatar:hover {

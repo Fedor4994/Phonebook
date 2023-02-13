@@ -1,4 +1,5 @@
 import { createSlice, isAnyOf, SerializedError } from '@reduxjs/toolkit';
+import { toast } from 'react-toastify';
 import { Contact } from 'types/contact';
 import {
   fetchContacts,
@@ -13,6 +14,7 @@ import {
 export type ContactsSlice = {
   items: Contact[];
   isLoading: boolean;
+  isLoadingAvatar: boolean;
   error: SerializedError | null;
   editedContact: Contact | null;
 };
@@ -20,6 +22,7 @@ export type ContactsSlice = {
 const contactsInitialState: ContactsSlice = {
   items: [],
   isLoading: false,
+  isLoadingAvatar: false,
   error: null,
   editedContact: null,
 };
@@ -80,12 +83,20 @@ const contactsSlice = createSlice({
           });
         }
       )
+      .addCase(updateContactAvatar.pending, state => {
+        state.isLoadingAvatar = true;
+      })
       .addCase(updateContactAvatar.fulfilled, (state, { payload }) => {
         state.items.forEach(contact => {
           if (contact._id === payload._id) {
             contact.avatarURL = payload.avatarURL;
           }
         });
+        state.isLoadingAvatar = false;
+      })
+      .addCase(updateContactAvatar.rejected, state => {
+        state.isLoadingAvatar = false;
+        toast.error('Avatar must be an image');
       })
       .addMatcher(
         isAnyOf(
