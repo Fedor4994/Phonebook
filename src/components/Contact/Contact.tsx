@@ -5,12 +5,8 @@ import { HiOutlineUserCircle } from 'react-icons/hi';
 import { FiPhone } from 'react-icons/fi';
 import { SiMaildotru } from 'react-icons/si';
 import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
-import { MdAddPhotoAlternate } from 'react-icons/md';
-import {
-  getContacts,
-  getEditedContact,
-  getIsLoading,
-} from 'redux/contacts/contacts-selectors';
+import { RiImageEditLine } from 'react-icons/ri';
+import { getContacts, getIsLoading } from 'redux/contacts/contacts-selectors';
 import { setEditedContact } from 'redux/contacts/contactsSlice';
 import {
   deleteContact,
@@ -30,7 +26,6 @@ const ContactItem = ({ contact }: ContactProps) => {
   const dispatch = useAppDispatch();
   const isLoading = useSelector(getIsLoading);
   const contacts = useSelector(getContacts);
-  const isEdited = useSelector(getEditedContact);
 
   const [modalImage, setModalImage] = useState('');
 
@@ -102,14 +97,12 @@ const ContactItem = ({ contact }: ContactProps) => {
     const file = e.currentTarget.files![0];
     formData.append('avatar', file);
     dispatch(updateContactAvatar({ avatar: formData, _id: contact._id }));
-    dispatch(setEditedContact(null));
+    setModalImage('');
   };
 
   const handleAvatarClick = (id: string) => {
-    if (!isEdited) {
-      const changedContact = contacts.find(contact => contact._id === id);
-      setModalImage(changedContact?.avatarURL || '');
-    }
+    const changedContact = contacts.find(contact => contact._id === id);
+    setModalImage(changedContact?.avatarURL || '');
   };
 
   const closeModal = (event: React.MouseEvent<HTMLElement>) => {
@@ -132,29 +125,12 @@ const ContactItem = ({ contact }: ContactProps) => {
       </div>
       <div className={s.contactInfoWrapper}>
         {avatarURL && (
-          <label
+          <div
             onClick={() => handleAvatarClick(contact._id)}
             className={s.uploadAvatar}
           >
-            {isEdited && (
-              <input
-                className={s.uploadInput}
-                onChange={handleAvatarChange}
-                type="file"
-                name="avatar"
-                aria-label="qweqwe"
-              />
-            )}
-
             <img className={s.avatar} src={avatarURL} alt="avatar" />
-            {isEdited?.email === contact.email && (
-              <MdAddPhotoAlternate
-                size="70%"
-                color="#01520c"
-                className={s.editIcon}
-              />
-            )}
-          </label>
+          </div>
         )}
         <div>
           {name && (
@@ -203,7 +179,26 @@ const ContactItem = ({ contact }: ContactProps) => {
       {modalImage && (
         <div onClick={closeModal} className={s.backdrop}>
           <div className={s.avatarModal}>
-            <img className={s.modalImage} src={modalImage} alt="big-avatar" />
+            <div
+              style={{
+                position: 'relative',
+              }}
+            >
+              <img className={s.modalImage} src={modalImage} alt="big-avatar" />
+              <label
+                className={s.changeAvatarIcon}
+                onClick={() => handleAvatarClick(contact._id)}
+              >
+                <input
+                  className={s.uploadInput}
+                  onChange={handleAvatarChange}
+                  type="file"
+                  name="avatar"
+                  aria-label="qweqwe"
+                />
+                <RiImageEditLine size="80%" />
+              </label>
+            </div>
           </div>
         </div>
       )}
