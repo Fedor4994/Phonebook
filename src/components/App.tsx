@@ -40,7 +40,7 @@ export const App = () => {
                 element={
                   <PrivateRoute
                     component={<ContactsPage />}
-                    redirectTo="/login"
+                    redirectTo="/register"
                   />
                 }
               />
