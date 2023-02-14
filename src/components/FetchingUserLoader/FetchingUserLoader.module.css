@@ -1,0 +1,8 @@
+.loaderBackground {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(17, 24, 39, 1);
+}

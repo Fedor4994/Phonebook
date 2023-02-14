@@ -13,6 +13,7 @@ import RegiserPage from 'views/RegisterPage/RegiserPage';
 import PrivateRoute from './PrivateRoute';
 import PublicRoute from './PublicRoute';
 import { useAppDispatch } from 'redux/store';
+import FetchingUserLoader from './FetchingUserLoader/FetchingUserLoader';
 
 export const App = () => {
   const dispatch = useAppDispatch();
@@ -30,7 +31,9 @@ export const App = () => {
         height: '100%',
       }}
     >
-      {!isFetchingUser && (
+      {isFetchingUser ? (
+        <FetchingUserLoader />
+      ) : (
         <>
           <Routes>
             <Route path="/" element={<Layout />}>
