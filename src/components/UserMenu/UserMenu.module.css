@@ -12,39 +12,6 @@
   gap: 10px;
 }
 
-.avatar {
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  object-fit: cover;
-}
-
-.uploadInput {
-  display: none;
-}
-
-.uploadAvatar {
-  position: relative;
-  cursor: pointer;
-  display: block;
-  width: 70px;
-  height: 70px;
-  border-radius: 50%;
-  transition: 200ms all ease;
-}
-
-.avatarLoader {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-}
-
-.uploadAvatar:hover {
-  scale: 1.1;
-  opacity: 0.7;
-}
-
 .userWrapper {
   display: flex;
   flex-direction: column;
