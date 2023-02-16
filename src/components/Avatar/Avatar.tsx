@@ -1,4 +1,5 @@
 import AvatarLoader from 'components/AvatarLoader/AvatarLoader';
+import { AnimateSharedLayout, AnimatePresence, motion } from 'framer-motion';
 import React, { useState, useEffect } from 'react';
 import { RiImageEditLine } from 'react-icons/ri';
 import { useSelector } from 'react-redux';
@@ -70,7 +71,62 @@ const Avatar = ({ user, contact }: AvatarProps) => {
 
   return (
     <>
-      <div onClick={handleAvatarClick} className={s.uploadAvatar}>
+      <AnimateSharedLayout>
+        <div onClick={handleAvatarClick} className={s.uploadAvatar}>
+          {contact ? (
+            <motion.img
+              layoutId="image"
+              className={s.avatar}
+              src={contact.avatarURL}
+              alt="avatar"
+            />
+          ) : (
+            <motion.img
+              layoutId="image"
+              className={s.avatar}
+              src={user?.avatarURL || ''}
+              alt="avatar"
+            />
+          )}
+
+          {isLoading && user && <AvatarLoader />}
+
+          {isLoadingContactAvatar &&
+            contact &&
+            editedAvatarId === contact._id && <AvatarLoader />}
+        </div>
+        <AnimatePresence>
+          {modalImage && (
+            <div onClick={closeModal} className={s.backdrop}>
+              <div className={s.avatarModal}>
+                <motion.div
+                  layoutId="image"
+                  style={{
+                    position: 'relative',
+                  }}
+                >
+                  <img
+                    className={s.modalImage}
+                    src={modalImage}
+                    alt="big-avatar"
+                  />
+                  <label className={s.changeAvatarIcon}>
+                    <input
+                      className={s.uploadInput}
+                      onChange={handleAvatarChange}
+                      type="file"
+                      name="avatar"
+                    />
+                    <RiImageEditLine size="80%" />
+                  </label>
+                </motion.div>
+              </div>
+            </div>
+          )}
+        </AnimatePresence>
+      </AnimateSharedLayout>
+
+      {/* <div onClick={handleAvatarClick} className={s.uploadAvatar}>
         {contact ? (
           <img className={s.avatar} src={contact.avatarURL} alt="avatar" />
         ) : (
@@ -105,7 +161,7 @@ const Avatar = ({ user, contact }: AvatarProps) => {
             </div>
           </div>
         </div>
-      )}
+      )} */}
     </>
   );
 };

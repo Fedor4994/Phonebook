@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { ThreeDots } from 'react-loader-spinner';
 import 'react-confirm-alert/src/react-confirm-alert.css';
+import { AnimatePresence } from 'framer-motion';
+
 import {
   fetchContacts,
   fetchFavoriteContacts,
@@ -57,7 +59,9 @@ const ContactsPage = () => {
             visible={true}
           />
         ) : (
-          <Contacts visibleContats={visibleContacts} />
+          <AnimatePresence>
+            <Contacts visibleContats={visibleContacts} />
+          </AnimatePresence>
         )}
       </div>
       {editedContact ? (
